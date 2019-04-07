@@ -4,9 +4,11 @@ Script that does basic preprocessing of data and loads into storage.
 
 import re
 import json
-import argparse
+import hashlib
 import logging
+import argparse
 import pandas as pd
+from sqlalchemy import create_engine
 
 logging.basicConfig(format='%(asctime)s: %(filename)s [%(funcName)s]- %(message)s', level=logging.DEBUG)
 LOGGER = logging.getLogger()
@@ -35,17 +37,26 @@ def data_clean():
     LOGGER.debug(str(filter_out_regex))
 
     # Run data through the filter
-    data['post_data'] = data['post_data'].apply(lambda x: re.sub(filter_out_regex, '', x, flags=re.IGNORECASE))
+    data['Posting'] = data['Posting'].apply(lambda x: re.sub(filter_out_regex, '', x, flags=re.IGNORECASE))
     LOGGER.info('Data clean complete.')
     return data
 
 
-def data_load(clean_data):
+def data_load(filtered_data):
+    # filtered_data['URL_Hash'] = filtered_data['Hyperlink'].apply(lambda x: hashlib.md5(x.encode()))
+
     # Temporary stub to spit data back out into a file
-    clean_data.to_csv('out.csv', index=False)
+    filtered_data.to_csv('out.csv', index=False)
+
+    # Dump to DB
+    engine = create_engine('sqlite://', echo=False)
+    filtered_data.to_sql('posting_data', con=engine)
+
+    x = engine.execute("SELECT * FROM posting_data limit 100").fetchall()
+    LOGGER.info(str(x))
 
 
 if __name__ == '__main__':
     args = parse_args()
-    clean_data = data_clean()
-    data_load(clean_data)
+    filtered_data = data_clean()
+    data_load(filtered_data)
