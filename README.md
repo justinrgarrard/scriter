@@ -24,8 +24,8 @@ same server.
 |---|---|
 | Done | Basic Web Scraper |
 | Done | Data Cleaning Process |
-| TBD | Database Setup |
-| TBD | Database Load Process |
+| Partial | Database Setup |
+| Partial | Database Load Process |
 | TBD | Cron Web Scrape |
 
 
