@@ -23,7 +23,7 @@ same server.
 | Status  | Task |
 |---|---|
 | Done | Basic Web Scraper |
-| TBD | Data Cleaning Process |
+| Done | Data Cleaning Process |
 | TBD | Database Setup |
 | TBD | Database Load Process |
 | TBD | Cron Web Scrape |

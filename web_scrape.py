@@ -2,9 +2,8 @@
 """
 A script that scrapes a specified website for job posting data.
 
-scrapy runspider web_scrape.py -o links.json -s CLOSESPIDER_PAGECOUNT=100
+scrapy runspider web_scrape.py -o links.csv -s CLOSESPIDER_PAGECOUNT=100
 """
-
 import scrapy
 
 
@@ -12,6 +11,7 @@ class IndeedJobPostSpider(scrapy.Spider):
     """
     A Scrapy Spider designed to scrape Indeed.com.
     """
+    # Parameters
     name = 'indeed'
     title = 'software+engineer'
     start_urls = ['https://www.indeed.com/jobs?q=' + title]
@@ -30,7 +30,9 @@ class IndeedJobPostSpider(scrapy.Spider):
 
     def parse_posting_link(self, response):
         # Return the URL and the contents of the job posting
+        raw_data = response.css('div *::text').extract()
         yield {
             'hyperlink': response.request.url,
-            'post_data': response.css('div *::text').extract()
+            'post_data': '\n'.join(raw_data),
+            'source': 'indeed'
         }
