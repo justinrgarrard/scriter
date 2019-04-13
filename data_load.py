@@ -43,25 +43,29 @@ def data_clean():
 
 def data_load(filtered_data):
     LOGGER.info('>> Starting data load.')
+
+    # Make a hash from the URL
     filtered_data['URL_Hash'] = filtered_data['Hyperlink'].apply(lambda x: hashlib.md5(x.encode()).hexdigest())
-    LOGGER.info('Input Data Shape: {0}'.format(filtered_data.shape))
-    LOGGER.info('Input Data Schema: {0}'.format(filtered_data.columns))
 
     # Filter out duplicates by URL hash
     engine = create_engine('sqlite:///jobscrape.db', echo=False)
     hashes = pd.read_sql('SELECT URL_Hash FROM posting_data', engine)
     filtered_data_no_dup = filtered_data.loc[~filtered_data['URL_Hash'].isin(hashes['URL_Hash'])]
+
+    # Logging
+    LOGGER.debug('Input Data Shape: {0}'.format(filtered_data.shape))
+    LOGGER.debug('Filtered Data Shape: {0}'.format(filtered_data_no_dup.shape))
     LOGGER.debug('Rows to Add (No Duplicates):')
     LOGGER.debug(filtered_data_no_dup)
 
-    pre_row_count = str(engine.execute("SELECT count(*) FROM posting_data").fetchall()[0][0])
-    LOGGER.info('Pre Insert Table Row Count: {0}'.format(pre_row_count))
-
     # Dump new rows to DB
-    LOGGER.info('Non-Duplicate Rows to Add: {0}'.format(str(len(filtered_data_no_dup))))
+    pre_row_count = str(engine.execute("SELECT count(*) FROM posting_data").fetchall()[0][0])
     filtered_data_no_dup.to_sql('posting_data', con=engine, if_exists='append')
-
     post_row_count = str(engine.execute("SELECT count(*) FROM posting_data").fetchall()[0][0])
+
+    # Logging
+    LOGGER.info('Pre Insert Table Row Count: {0}'.format(pre_row_count))
+    LOGGER.info('Non-Duplicate Rows to Add: {0}'.format(str(len(filtered_data_no_dup))))
     LOGGER.info('Post Insert Table Row Count: {0}'.format(post_row_count))
     LOGGER.info('Sanity Check: {0} - {1} = {2}'.format(post_row_count, pre_row_count, str(len(filtered_data_no_dup))))
     LOGGER.info('<< Finishing data load.')
