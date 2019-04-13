@@ -27,5 +27,9 @@ same server.
 | Partial | Database Setup |
 | Partial | Database Load Process |
 | TBD | Cron Web Scrape |
+| TBD | Parametrize Web Scrape (Job Title) |
 
 
+**Data Access**
+
+**Web Stack**
