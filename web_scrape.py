@@ -2,7 +2,7 @@
 """
 A script that scrapes a specified website for job posting data.
 
-scrapy runspider web_scrape.py -o links.csv -s CLOSESPIDER_PAGECOUNT=100
+scrapy runspider web_scrape.py -o links.csv -s CLOSESPIDER_PAGECOUNT=100 -a job_title='software+engineer'
 """
 import scrapy
 
@@ -13,8 +13,18 @@ class IndeedJobPostSpider(scrapy.Spider):
     """
     # Parameters
     name = 'indeed'
-    title = 'software+engineer'
-    start_urls = ['https://www.indeed.com/jobs?q=' + title]
+    # title = 'software+engineer'
+    # start_urls = ['https://www.indeed.com/jobs?q=' + title]
+
+    def __init__(self, job_title='', **kwargs):
+        """
+        Override default constructor to parse an extra input arguments.
+        :param job_title:
+        :param kwargs:
+        """
+        self.job_title = job_title
+        self.start_urls = [f'https://www.indeed.com/jobs?q={job_title}']
+        super().__init__(**kwargs)
 
     def parse(self, response):
         # Pull all links related to job postings
@@ -34,4 +44,5 @@ class IndeedJobPostSpider(scrapy.Spider):
         yield {
             'Hyperlink': response.request.url,
             'Posting': '\n'.join(raw_data),
+            'TitleTag': self.job_title,
         }

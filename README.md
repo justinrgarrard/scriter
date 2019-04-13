@@ -24,10 +24,10 @@ same server.
 |---|---|
 | Done | Basic Web Scraper |
 | Done | Data Cleaning Process |
-| Partial | Database Setup |
-| Partial | Database Load Process |
+| Done | Temporary Database Setup |
+| Done | Database Load Process |
+| Partial | Parametrize Web Scrape (Job Title) |
 | TBD | Cron Web Scrape |
-| TBD | Parametrize Web Scrape (Job Title) |
 
 
 **Data Access**
