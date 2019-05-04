@@ -40,3 +40,5 @@ justify a detour.
 
 * Host from a full web server
 
+* Use a TF-IDF model instead of a unique frequency counter
+

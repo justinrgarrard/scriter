@@ -64,8 +64,8 @@ def data_load(filtered_data, job_title):
 
         class newTable(Base):
             __tablename__ = job_title
-            hyperlink = Column(String)
-            posting = Column(String)
+            Hyperlink = Column(String)
+            Posting = Column(String)
             URL_Hash = Column(String, primary_key=True)
 
         Base.metadata.create_all(engine)

@@ -26,10 +26,24 @@ same server.
 | Done | Data Cleaning Process |
 | Done | Temporary Database Setup |
 | Done | Database Load Process |
-| Partial | Parametrize Web Scrape (Job Title) |
+| Done | Parametrize Web Scrape (Job Title) |
+| TBD | Switch from SQLite to Postgresql |
 | TBD | Cron Web Scrape |
 
 
 **Data Access**
 
+| Status  | Task |
+|---|---|
+| TBD | Query database |
+| TBD | Create a TF-IDF model |
+| TBD | Store the TF-IDF model |
+
+
 **Web Stack**
+
+| Status  | Task |
+|---|---|
+| TBD | Create locally hosted site |
+| TBD | Visualize TF-IDF models |
+| TBD | Deploy site to scriter.net domain |
