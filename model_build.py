@@ -41,12 +41,18 @@ def main(job_title):
     # posting_data = posting_data.apply(lambda x: re.sub(sharps, 'sharp', x))
     # posting_data = posting_data.apply(lambda x: re.sub(doubleplus, 'doubleplus', x))
 
-    # Fit the data with sklearn's model
-    vectorizer = TfidfVectorizer(ngram_range=(1, 2))
-    aleph = vectorizer.fit_transform(posting_data)
+    # Fit the data with sklearn's model, cutting out phrases that appear too frequently
+    vectorizer = TfidfVectorizer(ngram_range=(1, 2), max_df=0.85)
+    vector = vectorizer.fit_transform(posting_data)
 
-    print(aleph[0, vectorizer.vocabulary_['python']])
+    print(vector.shape)
+    print(vector[0, vectorizer.vocabulary_['python']])
     # print(aleph[0, vectorizer.vocabulary_['csharp']])
+
+    # Find the highest ranked phrases
+    aleph = vectorizer.get_feature_names()
+    beta = sorted([(gram, vector[0, vectorizer.vocabulary_[gram]]) for gram in aleph], key=lambda x: x[1], reverse=True)
+    print(beta[:100])
 
 
 if __name__ == '__main__':

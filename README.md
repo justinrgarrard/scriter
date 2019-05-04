@@ -29,15 +29,17 @@ same server.
 | Done | Parametrize Web Scrape (Job Title) |
 | TBD | Switch from SQLite to Postgresql |
 | TBD | Cron Web Scrape |
+| TBD | Parameterize for Multiple Sources |
 
 
 **Data Access**
 
 | Status  | Task |
 |---|---|
-| TBD | Query database |
-| TBD | Create a TF-IDF model |
+| Done | Query database |
+| Done | Create a TF-IDF model |
 | TBD | Store the TF-IDF model |
+| TBD | Refine the TF-IDF model |
 
 
 **Web Stack**

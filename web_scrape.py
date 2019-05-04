@@ -13,8 +13,6 @@ class IndeedJobPostSpider(scrapy.Spider):
     """
     # Parameters
     name = 'indeed'
-    # title = 'software+engineer'
-    # start_urls = ['https://www.indeed.com/jobs?q=' + title]
 
     def __init__(self, job_title='', **kwargs):
         """
@@ -23,7 +21,7 @@ class IndeedJobPostSpider(scrapy.Spider):
         :param kwargs:
         """
         self.job_title = job_title
-        self.start_urls = [f'https://www.indeed.com/jobs?q={job_title}']
+        self.start_urls = [f'https://www.indeed.com/jobs?q={job_title}&fromage=7']
         super().__init__(**kwargs)
 
     def parse(self, response):
