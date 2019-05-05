@@ -38,7 +38,7 @@ class IndeedJobPostSpider(scrapy.Spider):
 
     def parse_posting_link(self, response):
         # Return the URL and the contents of the job posting
-        raw_data = response.css('div *::text').extract()
+        raw_data = response.css('div[id="jobDescriptionText"] *::text').extract()
         yield {
             'Hyperlink': response.request.url,
             'Posting': '\n'.join(raw_data)
