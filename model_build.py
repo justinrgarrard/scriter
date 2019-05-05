@@ -4,6 +4,7 @@ Script that converts job posting data into NLP models.
 
 import us
 import re
+import json
 import logging
 import argparse
 import pandas as pd
@@ -55,8 +56,8 @@ def main(job_title):
     vector = vectorizer.fit_transform(posting_data)
 
     print(vector.shape)
-    print(vector[0, vectorizer.vocabulary_['python']])
-    print(vector[0, vectorizer.vocabulary_['java']])
+    # print(vector[0, vectorizer.vocabulary_['python']])
+    # print(vector[0, vectorizer.vocabulary_['java']])
     # print(aleph[0, vectorizer.vocabulary_['csharp']])
 
     # Find the highest ranked phrases
@@ -64,6 +65,17 @@ def main(job_title):
     beta = sorted([(gram, vector[0, vectorizer.vocabulary_[gram]]) for gram in aleph], key=lambda x: x[1], reverse=True)
     delta = pd.DataFrame(beta, columns=['Gram', 'TFIDF'])
     print(delta)
+
+    # Get an ordered representation of common technologies,
+    # per StackOverflow's 2019 survey
+    with open('tech.json', 'r+') as f:
+        techs = json.load(f)
+
+    for key in techs:
+        try:
+            print('{0}: {1}'.format(key, vector[0, vectorizer.vocabulary_[key.lower()]]))
+        except KeyError:
+            print('{0}: {1}'.format(key, 'Null'))
 
 
 if __name__ == '__main__':
