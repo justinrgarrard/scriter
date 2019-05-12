@@ -25,6 +25,7 @@ def parse_args():
 
 
 def main(job_title):
+    LOGGER.info('>>>Beginning model build.')
     # Get a listing of common technologies,
     # per StackOverflow's 2019 survey
     with open('tech.json', 'r+') as f:
@@ -38,6 +39,8 @@ def main(job_title):
 
     # Generate statistics on data
     vocab = [key.lower() for key in techs]
+    LOGGER.info('Number of Keywords:')
+    LOGGER.info(len(vocab))
     vectorizer = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
                                  vocabulary=vocab)
     count_vector = vectorizer.fit_transform(posting_data)
@@ -68,6 +71,24 @@ def main(job_title):
     sorted_tfidf_vals = sorted(tfidf_vals.items(), key=lambda x: (x[1], x[0]), reverse=True)
     LOGGER.info('TFIDF Values:')
     LOGGER.info(sorted_tfidf_vals)
+
+    # Format output
+    output = pd.DataFrame()
+    output['Keyword'] = vocab
+    output['TF'] = output['Keyword'].apply(lambda x: counts[x])
+    output['DF'] = output['Keyword'].apply(lambda x: uniq_counts[x])
+    output['IDF'] = output['Keyword'].apply(lambda x: idf_vals[x])
+    output['TFIDF'] = output['Keyword'].apply(lambda x: tfidf_vals[x])
+    output['Document Count'] = num_documents
+
+    LOGGER.info('Output Data Shape:')
+    LOGGER.info(output.shape)
+
+    # Store output
+    engine2 = create_engine('sqlite:///jobmodel.db', echo=False)
+    output.to_sql(job_title, con=engine2, if_exists='replace', index=False)
+
+    LOGGER.info('<<<Finished model build.')
 
 
 if __name__ == '__main__':

@@ -39,8 +39,9 @@ same server.
 |---|---|
 | Done | Query database |
 | Done | Create a TF-IDF model |
-| TBD | Store the TF-IDF model |
+| Done | Store the TF-IDF model |
 | Done | Refine the TF-IDF model |
+| TBD | Aggregate synonyms (i.e. JS and JavaScript) |
 
 
 **Web Stack**
