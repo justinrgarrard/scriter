@@ -15,6 +15,7 @@ same server.
 
 * Web Server to Display Data (Apache)
 
+![Visual of Architecture](scriter_overview.png)
 
 ### Development Status
 
@@ -39,7 +40,7 @@ same server.
 | Done | Query database |
 | Done | Create a TF-IDF model |
 | TBD | Store the TF-IDF model |
-| TBD | Refine the TF-IDF model |
+| Done | Refine the TF-IDF model |
 
 
 **Web Stack**
