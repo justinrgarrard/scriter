@@ -13,6 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 LOG_FORMAT = '%(asctime)s: %(filename)s [%(funcName)s]- %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
 LOGGER = logging.getLogger()
+TECH_LISTING = 'tech.json'
 
 
 def parse_args():
@@ -26,9 +27,7 @@ def parse_args():
 
 def main(job_title):
     LOGGER.info('>>>Beginning model build.')
-    # Get a listing of common technologies,
-    # per StackOverflow's 2019 survey
-    with open('tech.json', 'r+') as f:
+    with open(TECH_LISTING, 'r+') as f:
         techs = json.load(f)
 
     # Pull data from table

@@ -28,7 +28,6 @@ same server.
 | Done | Temporary Database Setup |
 | Done | Database Load Process |
 | Done | Parametrize Web Scrape (Job Title) |
-| TBD | Switch from SQLite to Postgresql |
 | TBD | Cron Web Scrape |
 | TBD | Parameterize for Multiple Sources |
 
@@ -51,3 +50,14 @@ same server.
 | TBD | Create locally hosted site |
 | TBD | Visualize TF-IDF models |
 | TBD | Deploy site to scriter.net domain |
+
+
+**Functional**
+
+| Status  | Task |
+|---|---|
+| TBD | Reorganize file structure by component |
+| TBD | Develop test suite |
+| TBD | Swap SQLite for PostgreSQL |
+| TBD | Setup instructions |
+| TBD | Investigate containerization |
