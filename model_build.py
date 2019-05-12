@@ -2,31 +2,17 @@
 Script that converts job posting data into NLP models.
 """
 
-import us
-import re
 import json
 import logging
 import argparse
+import numpy as np
 import pandas as pd
-from collections import defaultdict
 from sqlalchemy import create_engine
-from nltk import tokenize
-from nltk import TweetTokenizer
-from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-from collections import Counter
 
 LOG_FORMAT = '%(asctime)s: %(filename)s [%(funcName)s]- %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
 LOGGER = logging.getLogger()
-
-# problemchars = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n()-:]')
-# sharps = re.compile(r'#')
-# doubleplus = re.compile(r'\+\+')
-# doublespace = re.compile(r' {2}')
-# stopWords = set(stopwords.words('english'))
 
 
 def parse_args():
@@ -39,43 +25,49 @@ def parse_args():
 
 
 def main(job_title):
-    # Pull data from table
-    engine = create_engine('sqlite:///jobscrape.db', echo=False)
-    posting_data = pd.read_sql(job_title, engine)['Posting']
-    print(posting_data.shape)
-
-    # Do some preprocessing
-    ## Remove state names
-    st = us.states.mapping('abbr', 'name')
-    state_names = set(st.keys()).union(st.values())
-    state_names = re.compile('|'.join(state_names))
-    posting_data = posting_data.apply(lambda x: re.sub(state_names, '', x))
-
-    # Fit the data with sklearn's model, cutting out phrases that appear too frequently
-    vectorizer = TfidfVectorizer(ngram_range=(1, 3), max_df=0.85, strip_accents='unicode')
-    vector = vectorizer.fit_transform(posting_data)
-
-    print(vector.shape)
-    # print(vector[0, vectorizer.vocabulary_['python']])
-    # print(vector[0, vectorizer.vocabulary_['java']])
-    # print(aleph[0, vectorizer.vocabulary_['csharp']])
-
-    # Find the highest ranked phrases
-    aleph = vectorizer.get_feature_names()
-    beta = sorted([(gram, vector[0, vectorizer.vocabulary_[gram]]) for gram in aleph], key=lambda x: x[1], reverse=True)
-    delta = pd.DataFrame(beta, columns=['Gram', 'TFIDF'])
-    print(delta)
-
-    # Get an ordered representation of common technologies,
+    # Get a listing of common technologies,
     # per StackOverflow's 2019 survey
     with open('tech.json', 'r+') as f:
         techs = json.load(f)
 
-    for key in techs:
-        try:
-            print('{0}: {1}'.format(key, vector[0, vectorizer.vocabulary_[key.lower()]]))
-        except KeyError:
-            print('{0}: {1}'.format(key, 'Null'))
+    # Pull data from table
+    engine = create_engine('sqlite:///jobscrape.db', echo=False)
+    posting_data = pd.read_sql(job_title, engine)['Posting']
+    LOGGER.info('Input Data Shape:')
+    LOGGER.info(posting_data.shape)
+
+    # Generate statistics on data
+    vocab = [key.lower() for key in techs]
+    vectorizer = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
+                                 vocabulary=vocab)
+    count_vector = vectorizer.fit_transform(posting_data)
+
+    ## Total Counts (Term Frequency; TF)
+    counts = {key: count_vector[val].sum() for key, val in vectorizer.vocabulary_.items()}
+    sorted_counts = sorted(counts.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    LOGGER.info('Term Frequencies:')
+    LOGGER.info(sorted_counts)
+
+    ## Unique Counts (Document Frequency; DF)
+    uniq_counts = {key: count_vector[val].count_nonzero() for key, val in vectorizer.vocabulary_.items()}
+    sorted_uniq_counts = sorted(uniq_counts.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    LOGGER.info('Document Frequencies:')
+    LOGGER.info(sorted_uniq_counts)
+
+    ## Inverse Document Frequency (IDF)
+    ### Traditional: log( N / DF )
+    ### Smoothed: log( N+1 / DF+1 )
+    num_documents = len(posting_data)
+    idf_vals = {key: np.log((num_documents+1) / (uniq_counts[key]+1)) for key in vectorizer.vocabulary_}
+    sorted_idf_vals = sorted(idf_vals.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    LOGGER.info('Inverse Document Frequencies:')
+    LOGGER.info(sorted_idf_vals)
+
+    ## Term Frequency * Inverse Document Frequency (TFIDF)
+    tfidf_vals = {key: counts[key] * idf_vals[key] for key in vectorizer.vocabulary_}
+    sorted_tfidf_vals = sorted(tfidf_vals.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    LOGGER.info('TFIDF Values:')
+    LOGGER.info(sorted_tfidf_vals)
 
 
 if __name__ == '__main__':

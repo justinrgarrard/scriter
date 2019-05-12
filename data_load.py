@@ -44,7 +44,7 @@ def data_clean(input_filename):
     LOGGER.debug('Filter Regex: {0}'.format(str(filter_out_regex)))
 
     # Filter data
-    data['Posting'] = data['Posting'].apply(lambda x: re.sub(filter_out_regex, '', x, flags=re.IGNORECASE))
+    data['Posting'] = data['Posting'].apply(lambda x: re.sub(filter_out_regex, '', str(x), flags=re.IGNORECASE))
 
     # Hash the URL
     data['URL_Hash'] = data['Hyperlink'].apply(lambda x: hashlib.md5(x.encode()).hexdigest())

@@ -21,7 +21,7 @@ class IndeedJobPostSpider(scrapy.Spider):
         :param kwargs:
         """
         self.job_title = job_title
-        self.start_urls = [f'https://www.indeed.com/jobs?q={job_title}&fromage=7']
+        self.start_urls = [f'https://www.indeed.com/jobs?q={job_title}&fromage=7&limit=50']
         super().__init__(**kwargs)
 
     def parse(self, response):
