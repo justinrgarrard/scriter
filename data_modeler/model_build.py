@@ -2,6 +2,7 @@
 Script that converts job posting data into NLP models.
 """
 
+import os
 import json
 import logging
 import argparse
@@ -25,13 +26,26 @@ def parse_args():
     return parser.parse_args()
 
 
+def get_filepath(input_filename):
+    """
+
+    :param input_filename:
+    :return:
+    """
+    input_filepath = os.path.dirname(os.path.abspath(__file__))
+    input_filepath = os.path.join(input_filepath, input_filename)
+    return input_filepath
+
+
 def main(job_title):
     LOGGER.info('>>>Beginning model build.')
-    with open(TECH_LISTING, 'r+') as f:
+    tech_filepath = get_filepath(TECH_LISTING)
+    with open(tech_filepath, 'r+') as f:
         techs = json.load(f)
 
     # Pull data from table
-    engine = create_engine('sqlite:///jobscrape.db', echo=False)
+    scrape_db_filepath = os.path.join(os.getcwd(), 'web_scraper/jobscrape.db')
+    engine = create_engine('sqlite:////' + scrape_db_filepath, echo=False)
     posting_data = pd.read_sql(job_title, engine)['Posting']
     LOGGER.info('Input Data Shape:')
     LOGGER.info(posting_data.shape)
@@ -84,7 +98,8 @@ def main(job_title):
     LOGGER.info(output.shape)
 
     # Store output
-    engine2 = create_engine('sqlite:///jobmodel.db', echo=False)
+    model_db_filepath = get_filepath('jobmodel.db')
+    engine2 = create_engine('sqlite:////' + model_db_filepath, echo=False)
     output.to_sql(job_title, con=engine2, if_exists='replace', index=False)
 
     LOGGER.info('<<<Finished model build.')

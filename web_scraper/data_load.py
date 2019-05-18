@@ -1,7 +1,10 @@
 """
 Script that does basic preprocessing of data and loads it into storage.
+
+python data_load.py links.csv software_engineer
 """
 
+import os
 import re
 import json
 import hashlib
@@ -30,14 +33,27 @@ def parse_args():
     return parser.parse_args()
 
 
+def get_filepath(input_filename):
+    """
+
+    :param input_filename:
+    :return:
+    """
+    input_filepath = os.path.dirname(os.path.abspath(__file__))
+    input_filepath = os.path.join(input_filepath, input_filename)
+    return input_filepath
+
+
 def data_clean(input_filename):
     LOGGER.info('>> Starting data clean.')
 
     # Load data
-    data = pd.read_csv(input_filename)
+    input_filepath = get_filepath(input_filename)
+    data = pd.read_csv(input_filepath)
 
     # Set up filter
-    with open('filter.json', 'r+') as f:
+    filter_filepath = get_filepath(FILTER_FILE)
+    with open(filter_filepath, 'r+') as f:
         filter_data = json.load(f)
     filter_out = filter_data['Indeed']
     filter_out_regex = '|'.join(filter_out)
@@ -56,7 +72,8 @@ def data_load(filtered_data, job_title):
     LOGGER.info('>> Starting data load.')
 
     # Open connection to database
-    engine = create_engine('sqlite:///jobscrape.db', echo=False)
+    scrape_db_filepath = get_filepath('jobscrape.db')
+    engine = create_engine('sqlite:////' + scrape_db_filepath, echo=False)
 
     # Create table for job title if it does not exist
     if not engine.dialect.has_table(engine, job_title):
