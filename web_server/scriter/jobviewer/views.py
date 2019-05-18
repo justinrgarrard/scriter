@@ -3,9 +3,9 @@ from django.http import HttpResponse
 
 
 def home_page(request):
-    return HttpResponse("Hello, world. Index page for scriter.")
+    return render(request, 'home.html')
 
 
-def index(request):
-    return HttpResponse("Hello, world. Index page for jobviewer.")
+# def index(request):
+#     return HttpResponse("Hello, world. Index page for jobviewer.")
 
