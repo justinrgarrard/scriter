@@ -47,7 +47,7 @@ same server.
 
 | Status  | Task |
 |---|---|
-| TBD | Create locally hosted site |
+| DONE | Create locally hosted site |
 | TBD | Visualize TF-IDF models |
 | TBD | Deploy site to scriter.net domain |
 
@@ -56,7 +56,7 @@ same server.
 
 | Status  | Task |
 |---|---|
-| TBD | Reorganize file structure by component |
+| DONE | Reorganize file structure by component |
 | TBD | Develop test suite |
 | TBD | Swap SQLite for PostgreSQL |
 | TBD | Setup instructions |
