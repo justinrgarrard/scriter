@@ -72,8 +72,7 @@ def data_load(filtered_data, job_title):
     LOGGER.info('>> Starting data load.')
 
     # Open connection to database
-    scrape_db_filepath = get_filepath('jobscrape.db')
-    engine = create_engine('sqlite:////' + scrape_db_filepath, echo=False)
+    engine = create_engine('postgresql://roy@localhost/scriter_ingest')
 
     # Create table for job title if it does not exist
     if not engine.dialect.has_table(engine, job_title):
@@ -88,12 +87,12 @@ def data_load(filtered_data, job_title):
         Base.metadata.create_all(engine)
 
     # Filter out duplicates by URL hash
-    hashes = pd.read_sql('SELECT URL_Hash FROM {}'.format(job_title), engine)
+    hashes = pd.read_sql('SELECT "URL_Hash" FROM {}'.format(job_title), engine)
     filtered_data_no_dup = filtered_data.loc[~filtered_data['URL_Hash'].isin(hashes['URL_Hash'])]
     LOGGER.debug('Input Data Shape: {0}'.format(filtered_data.shape))
     LOGGER.debug('Filtered Data Shape: {0}'.format(filtered_data_no_dup.shape))
 
-    # Dump new rows to database
+    # # Dump new rows to database
     pre_row_count = str(engine.execute("SELECT count(*) FROM {}".format(job_title)).fetchall()[0][0])
     filtered_data_no_dup.to_sql(job_title, con=engine, if_exists='append', index=False)
     post_row_count = str(engine.execute("SELECT count(*) FROM {}".format(job_title)).fetchall()[0][0])

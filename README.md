@@ -36,10 +36,10 @@ same server.
 
 | Status  | Task |
 |---|---|
-| Done | Query database |
-| Done | Create a TF-IDF model |
-| Done | Store the TF-IDF model |
-| Done | Refine the TF-IDF model |
+| DONE | Query database |
+| DONE | Create a TF-IDF model |
+| DONE | Store the TF-IDF model |
+| DONE | Refine the TF-IDF model |
 | TBD | Aggregate synonyms (i.e. JS and JavaScript) |
 
 
@@ -48,6 +48,7 @@ same server.
 | Status  | Task |
 |---|---|
 | DONE | Create locally hosted site |
+| TBD | Load data from into web server DB |
 | TBD | Visualize TF-IDF models |
 | TBD | Deploy site to scriter.net domain |
 
@@ -58,6 +59,6 @@ same server.
 |---|---|
 | DONE | Reorganize file structure by component |
 | TBD | Develop test suite |
-| TBD | Swap SQLite for PostgreSQL |
-| TBD | Setup instructions |
+| DONE | Swap SQLite for PostgreSQL |
+| TBD | Ansible file for server setup |
 | TBD | Investigate containerization |

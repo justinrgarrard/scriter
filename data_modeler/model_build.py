@@ -44,8 +44,9 @@ def main(job_title):
         techs = json.load(f)
 
     # Pull data from table
-    scrape_db_filepath = os.path.join(os.getcwd(), 'web_scraper/jobscrape.db')
-    engine = create_engine('sqlite:////' + scrape_db_filepath, echo=False)
+    # scrape_db_filepath = os.path.join(os.getcwd(), 'web_scraper/jobscrape.db')
+    # engine = create_engine('sqlite:////' + scrape_db_filepath, echo=False)
+    engine = create_engine('postgresql://roy@localhost/scriter_ingest')
     posting_data = pd.read_sql(job_title, engine)['Posting']
     LOGGER.info('Input Data Shape:')
     LOGGER.info(posting_data.shape)
@@ -98,8 +99,7 @@ def main(job_title):
     LOGGER.info(output.shape)
 
     # Store output
-    model_db_filepath = get_filepath('jobmodel.db')
-    engine2 = create_engine('sqlite:////' + model_db_filepath, echo=False)
+    engine2 = create_engine('postgresql://roy@localhost/scriter_jobs')
     output.to_sql(job_title, con=engine2, if_exists='replace', index=False)
 
     LOGGER.info('<<<Finished model build.')
