@@ -12,6 +12,7 @@ from .models import Job
 LOG_FORMAT = '%(asctime)s: %(filename)s [%(funcName)s]- %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
 LOGGER = logging.getLogger()
+INGEST_DB_CONN_STR = 'postgresql://roy@localhost/scriter_ingest'
 
 
 def parse_args():
@@ -26,7 +27,7 @@ def parse_args():
 
 def main(job_title):
     # Connect to database
-    engine = create_engine('postgresql://roy@localhost/scriter_jobs')
+    engine = create_engine(INGEST_DB_CONN_STR)
 
     # Remove contents of web server's models
 

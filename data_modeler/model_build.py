@@ -15,6 +15,8 @@ LOG_FORMAT = '%(asctime)s: %(filename)s [%(funcName)s]- %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
 LOGGER = logging.getLogger()
 TECH_LISTING = 'tech.json'
+INGEST_DB_CONN_STR = 'postgresql://roy@localhost/scriter_ingest'
+MODEL_DB_CONN_STR = 'postgresql://roy@localhost/scriter_jobs'
 
 
 def parse_args():
@@ -44,9 +46,7 @@ def main(job_title):
         techs = json.load(f)
 
     # Pull data from table
-    # scrape_db_filepath = os.path.join(os.getcwd(), 'web_scraper/jobscrape.db')
-    # engine = create_engine('sqlite:////' + scrape_db_filepath, echo=False)
-    engine = create_engine('postgresql://roy@localhost/scriter_ingest')
+    engine = create_engine(INGEST_DB_CONN_STR)
     posting_data = pd.read_sql(job_title, engine)['Posting']
     LOGGER.info('Input Data Shape:')
     LOGGER.info(posting_data.shape)
@@ -99,7 +99,7 @@ def main(job_title):
     LOGGER.info(output.shape)
 
     # Store output
-    engine2 = create_engine('postgresql://roy@localhost/scriter_jobs')
+    engine2 = create_engine(MODEL_DB_CONN_STR)
     output.to_sql(job_title, con=engine2, if_exists='replace', index=False)
 
     LOGGER.info('<<<Finished model build.')

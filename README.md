@@ -60,5 +60,6 @@ same server.
 | DONE | Reorganize file structure by component |
 | TBD | Develop test suite |
 | DONE | Swap SQLite for PostgreSQL |
+| TBD | Properly handle DB credentials |
 | TBD | Ansible file for server setup |
 | TBD | Investigate containerization |

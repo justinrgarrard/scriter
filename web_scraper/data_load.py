@@ -19,6 +19,7 @@ FILTER_FILE = 'filter.json'
 LOG_FORMAT = '%(asctime)s: %(filename)s [%(funcName)s]- %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
 LOGGER = logging.getLogger()
+INGEST_DB_CONN_STR = 'postgresql://roy@localhost/scriter_ingest'
 
 
 def parse_args():
@@ -72,7 +73,7 @@ def data_load(filtered_data, job_title):
     LOGGER.info('>> Starting data load.')
 
     # Open connection to database
-    engine = create_engine('postgresql://roy@localhost/scriter_ingest')
+    engine = create_engine(INGEST_DB_CONN_STR)
 
     # Create table for job title if it does not exist
     if not engine.dialect.has_table(engine, job_title):
