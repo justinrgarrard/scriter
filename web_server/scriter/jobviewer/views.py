@@ -14,13 +14,15 @@ def json_example(request):
 
 def chart_data(request):
     dataset = Job.objects
+    print(list(dataset.values_list('Keyword', flat=True)))
 
     chart = {
-        'chart': {'type': 'pie'},
-        'title': {'text': 'IDF by Keyword'},
+        'chart': {'type': 'column'},
+        'title': {'text': 'TFIDF by Keyword'},
+        'xAxis': {'categories': list(dataset.values_list('Keyword', flat=True))},
         'series': [{
-            'name': 'Aleph',
-            'data': []
+            'name': 'TFIDF',
+            'data': list(dataset.values_list('TFIDF', flat=True))
         }]
     }
 

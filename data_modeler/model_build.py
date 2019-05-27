@@ -15,8 +15,8 @@ LOG_FORMAT = '%(asctime)s: %(filename)s [%(funcName)s]- %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
 LOGGER = logging.getLogger()
 TECH_LISTING = 'tech.json'
-INGEST_DB_CONN_STR = 'postgresql://roy@localhost/scriter_ingest'
-MODEL_DB_CONN_STR = 'postgresql://roy@localhost/scriter_jobs'
+INGEST_DB_CONN_STR = 'postgresql://scriter_user:scriter_pass@localhost/scriter_ingest'
+MODEL_DB_CONN_STR = 'postgresql://scriter_user:scriter_pass@localhost/scriter_web'
 
 
 def parse_args():
