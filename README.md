@@ -13,7 +13,7 @@ same server.
 
 * DB to Store Data (Postgres)
 
-* Web Server to Display Data (Apache)
+* Web Server to Display Data (Apache + Django)
 
 ![Visual of Architecture](scriter_overview.png)
 
@@ -48,7 +48,7 @@ same server.
 | Status  | Task |
 |---|---|
 | DONE | Create locally hosted site |
-| TBD | Load data from into web server DB |
+| TBD | Load data into web server DB |
 | TBD | Visualize TF-IDF models |
 | TBD | Deploy site to scriter.net domain |
 
@@ -61,5 +61,5 @@ same server.
 | TBD | Develop test suite |
 | DONE | Swap SQLite for PostgreSQL |
 | TBD | Properly handle DB credentials |
-| TBD | Ansible file for server setup |
+| WIP | Ansible file for server setup |
 | TBD | Investigate containerization |

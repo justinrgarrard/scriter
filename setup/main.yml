@@ -1,0 +1,20 @@
+---
+- hosts: mainserver
+  remote_user: root
+  tasks:
+    - name: postgresql install
+      yum:
+        name: postgresql
+        state: latest
+    - name: postgresql activate
+      service:
+        name: postgresql
+        state: started
+    - name: apache install
+      yum:
+        name: httpd
+        state: latest
+    - name: apache activate
+      service:
+        name: httpd
+        state: started
