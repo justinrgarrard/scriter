@@ -116,6 +116,6 @@ python manage.py runserver
 | DONE | Reorganize file structure by component |
 | TBD | Develop test suite |
 | DONE | Swap SQLite for PostgreSQL |
-| WIP | Properly handle DB credentials |
-| WIP | Ansible file for server setup |
+| DONE | Properly handle DB credentials |
+| DONE | Ansible file for server setup |
 | TBD | Investigate containerization |

@@ -56,8 +56,8 @@
       become_user: postgres
       postgresql_user:
         db: scriter_ingest
-        name: {{ db_username }}
-        password: {{ db_password}}
+        name: "{{ db_username }}"
+        password: "{{ db_password}}"
         priv: "ALL"
         encrypted: yes
     - name: postgresql service account web
@@ -65,8 +65,8 @@
       become_user: postgres
       postgresql_user:
         db: scriter_web
-        name: {{ db_username }}
-        password: {{ db_password}}
+        name: "{{ db_username }}"
+        password: "{{ db_password}}"
         priv: "ALL"
         encrypted: yes
 
@@ -81,13 +81,13 @@
         path: /etc/profile.d/scriter.sh
         line: "export DB_USER={{ db_username }}"
     - name: add DB password to profile.d
-        lineinfile:
-          path: /etc/profile.d/scriter.sh
-          line: "export DB_PASS={{ db_password }}"
+      lineinfile:
+        path: /etc/profile.d/scriter.sh
+        line: "export DB_PASS={{ db_password }}"
     - name: add DB name to profile.d
-        lineinfile:
-          path: /etc/profile.d/scriter.sh
-          line: "export DB_NAME={{ web_db }}"
+      lineinfile:
+        path: /etc/profile.d/scriter.sh
+        line: "export DB_NAME={{ web_db }}"
 
     # Install Apache webserver
     - name: apache install
@@ -103,9 +103,18 @@
     - name: add service account
       user: 
         name: scriter
+        shell: /bin/bash
     - name: change directory ownership
       file:
         name: "{{ playbook_dir }}/.."
         owner: scriter
         group: scriter
         recurse: yes
+    - name: source virtualenv
+      lineinfile:
+        path: /home/scriter/.bashrc
+        line: "source {{ playbook_dir }}/../venv/bin/activate"
+    - name: source env variables
+      lineinfile:
+        path: /home/scriter/.bashrc
+        line: "source /etc/profile.d/scriter.sh"
