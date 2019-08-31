@@ -1,0 +1,6 @@
+scrapy
+numpy
+pandas
+sqlalchemy
+sklearn
+django
