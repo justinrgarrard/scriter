@@ -67,3 +67,13 @@
       service:
         name: apache2
         state: started
+
+    - name: add service account
+      user: 
+        name: scriter
+    - name: change directory ownership
+      file:
+        name: "{{ playbook_dir }}/.."
+        owner: scriter
+        group: scriter
+        recurse: yes
