@@ -62,60 +62,12 @@ same server.
 3. Perform data transformations
 
 ```
-python model_build.py software_engineer
+[scriter]$ python model_build.py software_engineer
 ```
 
 4. Launch web server
 
 ```
-python manage.py runserver
+[scriter]$ python manage.py runserver
 ```
 
-### Development Status
-
-**Data Load**
-
-| Status  | Task |
-|---|---|
-| Done | Basic Web Scraper |
-| Done | Data Cleaning Process |
-| Done | Temporary Database Setup |
-| Done | Database Load Process |
-| Done | Parametrize Web Scrape (Job Title) |
-| TBD | Cron Web Scrape |
-| TBD | Parametrize for Multiple Sources |
-
-
-**Data Access**
-
-| Status  | Task |
-|---|---|
-| DONE | Query database |
-| DONE | Create a TF-IDF model |
-| DONE | Store the TF-IDF model |
-| DONE | Refine the TF-IDF model |
-| TBD | Aggregate synonyms (i.e. JS and JavaScript) |
-
-
-**Web Stack**
-
-| Status  | Task |
-|---|---|
-| DONE | Create locally hosted site |
-| DONE | Load data into web server DB |
-| DONE | Visualize TF-IDF models |
-| TBD | Polish web appearance |
-| TBD | Parametrize for different job titles |
-| TBD | Deploy site to scriter.net domain |
-
-
-**Functional**
-
-| Status  | Task |
-|---|---|
-| DONE | Reorganize file structure by component |
-| TBD | Develop test suite |
-| DONE | Swap SQLite for PostgreSQL |
-| DONE | Properly handle DB credentials |
-| DONE | Ansible file for server setup |
-| TBD | Investigate containerization |
