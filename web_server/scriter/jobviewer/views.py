@@ -14,15 +14,18 @@ def job_json(request):
 
 def chart_data(request):
     dataset = Job.objects
-    print(list(dataset.values_list('Keyword', flat=True)))
+    metric = 'TFIDF'
+    title = 'Software Engineer Keywords [{}]'.format(metric)
+    keys = list(dataset.values_list('Keyword', flat=True))
+    vals =list(dataset.values_list('TFIDF', flat=True))
 
     chart = {
         'chart': {'type': 'column'},
-        'title': {'text': 'TFIDF by Keyword'},
-        'xAxis': {'categories': list(dataset.values_list('Keyword', flat=True))},
+        'title': {'text': title},
+        'xAxis': {'categories': keys},
         'series': [{
-            'name': 'TFIDF',
-            'data': list(dataset.values_list('TFIDF', flat=True))
+            'name': metric,
+            'data': vals
         }]
     }
 

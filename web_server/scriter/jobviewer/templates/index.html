@@ -1,12 +1,12 @@
 <!doctype html>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'jobviewer/style.css' %}">
 <html>
 <head>
   <meta charset="utf-8">
   <title>Scriter</title>
 </head>
 <body>
-  <h1>Scriter</h1>
-  <p>Keyword Visualizer</p>
   <div id="container" data-url="{% url 'chart_data' %}"></div>
   <div class="text-center" id="footer">
    <a href="https://github.com/justinrgarrard/scriter">
