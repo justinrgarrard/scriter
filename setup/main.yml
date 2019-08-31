@@ -1,20 +1,67 @@
 ---
-- hosts: mainserver
+- hosts: localhost 
   remote_user: root
   tasks:
+    - name: pip install
+      apt:
+        name: python-pip
+    - name: psycopg2 install
+      apt:
+        name: python-psycopg2
+    - name: virtualenv install
+      apt:
+        name: virtualenv
+
+    - name: install scrapy
+      pip:
+        name: scrapy
+        virtualenv: /opt/py-scriter
+
     - name: postgresql install
-      yum:
+      apt:
         name: postgresql
         state: latest
     - name: postgresql activate
       service:
         name: postgresql
         state: started
+
+    - name: postgresql database (scriter_ingest)
+      become: true
+      become_user: postgres
+      postgresql_db: 
+        name: scriter_ingest
+    - name: postgresql database (scriter_web)
+      become: true
+      become_user: postgres
+      postgresql_db:
+        name: scriter_web
+    - name: postgresql service account ingest
+      become: true
+      become_user: postgres
+      postgresql_user:
+        db: scriter_ingest
+        name: scriter_user
+        password: scriter_pass
+        priv: "ALL"
+        encrypted: yes
+    - name: postgresql service account web
+      become: true
+      become_user: postgres
+      postgresql_user:
+        db: scriter_web
+        name: scriter_user
+        password: scriter_pass
+        priv: "ALL"
+        encrypted: yes
+
+
+
     - name: apache install
-      yum:
-        name: httpd
+      apt:
+        name: apache2
         state: latest
     - name: apache activate
       service:
-        name: httpd
+        name: apache2
         state: started
