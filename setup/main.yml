@@ -1,7 +1,17 @@
 ---
+### Playbook for configuring a server to work with Scriter
+#
+# Be sure to change credentials in vars when deploying to production
+#
+
 - hosts: localhost 
   remote_user: root
+  vars:
+    db_username: scriter_user
+    db_password: scriter_pass
+    web_db: scriter_web
   tasks:
+    # Install Pip, Pyscopg2, and Postgres
     - name: pip install
       apt:
         name: python-pip
@@ -20,16 +30,17 @@
         name: postgresql
         state: started
 
+    # Configure Python libraries in a Virtualenv
     - name: virtualenv install
       apt:
         name: virtualenv
-
     - name: install Python libs
       pip:
         requirements: "{{ playbook_dir }}/requirements.txt"
         virtualenv: "{{ playbook_dir }}/../venv"
         virtualenv_python: python3
 
+    # Configure Postgres DB's for project
     - name: postgresql database (scriter_ingest)
       become: true
       become_user: postgres
@@ -45,8 +56,8 @@
       become_user: postgres
       postgresql_user:
         db: scriter_ingest
-        name: scriter_user
-        password: scriter_pass
+        name: {{ db_username }}
+        password: {{ db_password}}
         priv: "ALL"
         encrypted: yes
     - name: postgresql service account web
@@ -54,11 +65,31 @@
       become_user: postgres
       postgresql_user:
         db: scriter_web
-        name: scriter_user
-        password: scriter_pass
+        name: {{ db_username }}
+        password: {{ db_password}}
         priv: "ALL"
         encrypted: yes
 
+    # Configure Django environment variables
+    - name: make profile.d/scriter.sh
+      file:
+        path: /etc/profile.d/scriter.sh
+        state: touch
+        mode: '0644'
+    - name: add DB username to profile.d
+      lineinfile:
+        path: /etc/profile.d/scriter.sh
+        line: "export DB_USER={{ db_username }}"
+    - name: add DB password to profile.d
+        lineinfile:
+          path: /etc/profile.d/scriter.sh
+          line: "export DB_PASS={{ db_password }}"
+    - name: add DB name to profile.d
+        lineinfile:
+          path: /etc/profile.d/scriter.sh
+          line: "export DB_NAME={{ web_db }}"
+
+    # Install Apache webserver
     - name: apache install
       apt:
         name: apache2
@@ -68,6 +99,7 @@
         name: apache2
         state: started
 
+    # Configure a service account
     - name: add service account
       user: 
         name: scriter

@@ -1,5 +1,7 @@
 """
 Script that converts job posting data into NLP models.
+
+python model_build.py software_engineer
 """
 
 import os
@@ -15,8 +17,10 @@ LOG_FORMAT = '%(asctime)s: %(filename)s [%(funcName)s]- %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
 LOGGER = logging.getLogger()
 TECH_LISTING = 'tech.json'
-INGEST_DB_CONN_STR = 'postgresql://scriter_user:scriter_pass@localhost/scriter_ingest'
-MODEL_DB_CONN_STR = 'postgresql://scriter_user:scriter_pass@localhost/scriter_web'
+db_user = os.environ['DB_USER']
+db_pass = os.environ['DB_PASS']
+INGEST_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_ingest'.format(db_user, db_pass)
+MODEL_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_web'.format(db_user, db_pass)
 
 
 def parse_args():
