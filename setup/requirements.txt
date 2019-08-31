@@ -4,3 +4,4 @@ pandas
 sqlalchemy
 sklearn
 django
+psycopg2-binary

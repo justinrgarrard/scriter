@@ -5,18 +5,12 @@
     - name: pip install
       apt:
         name: python-pip
+    - name: psycopg2 prereq (libpq-dev)
+      apt:
+        name: libpq-dev
     - name: psycopg2 install
       apt:
         name: python-psycopg2
-    - name: virtualenv install
-      apt:
-        name: virtualenv
-
-    - name: install scrapy
-      pip:
-        name: scrapy
-        virtualenv: "{{ playbook_dir }}/../venv"
-
     - name: postgresql install
       apt:
         name: postgresql
@@ -25,6 +19,16 @@
       service:
         name: postgresql
         state: started
+
+    - name: virtualenv install
+      apt:
+        name: virtualenv
+
+    - name: install Python libs
+      pip:
+        requirements: "{{ playbook_dir }}/requirements.txt"
+        virtualenv: "{{ playbook_dir }}/../venv"
+        virtualenv_python: python3
 
     - name: postgresql database (scriter_ingest)
       become: true
@@ -54,8 +58,6 @@
         password: scriter_pass
         priv: "ALL"
         encrypted: yes
-
-
 
     - name: apache install
       apt:

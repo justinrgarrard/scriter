@@ -3,3 +3,4 @@
 *.csv
 *.db
 venv/
+setup/main.retry
