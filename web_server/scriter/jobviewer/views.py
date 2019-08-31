@@ -5,11 +5,11 @@ from .models import Job
 
 
 def home_page(request):
-    return render(request, 'job_json.html')
+    return render(request, 'index.html')
 
 
 def job_json(request):
-    return render(request, 'job_json.html')
+    return render(request, 'index.html')
 
 
 def chart_data(request):

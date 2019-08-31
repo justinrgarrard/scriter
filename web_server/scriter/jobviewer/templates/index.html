@@ -2,9 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Django Highcharts Example</title>
+  <title>Scriter</title>
 </head>
 <body>
+  <div id="sidebar">
+    <h1 id="lead-title">Scriter</h1>
+    <p id="lead-subtitle">Tech Keyword Visualizer</p>
+    <nav id="sidebar-links">
+      <a href="/">Software Engineer</a>
+    </nav>
+  </div>
   <div id="container" data-url="{% url 'chart_data' %}"></div>
   <script src="https://code.highcharts.com/highcharts.src.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
