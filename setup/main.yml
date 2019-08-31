@@ -15,7 +15,7 @@
     - name: install scrapy
       pip:
         name: scrapy
-        virtualenv: /opt/py-scriter
+        virtualenv: "{{ playbook_dir }}/../venv"
 
     - name: postgresql install
       apt:
