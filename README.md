@@ -1,7 +1,7 @@
 # README
 
-Scriter is a web application that scrapes job posting data from various
-websites and visualizes the outputs on a server.
+Scriter is a web application that scrapes job posting data and visualizes
+the outputs.
 
 
 ### Architecture
