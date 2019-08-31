@@ -20,6 +20,5 @@ from jobviewer import urls as jobviewer_urls
 
 urlpatterns = [
     path('', jobviewer_views.home_page, name='home'),
-    path('jobviewer/', include('jobviewer.urls')),
     path('admin/', admin.site.urls),
 ]
