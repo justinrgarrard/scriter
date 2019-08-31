@@ -38,10 +38,10 @@ same server.
 # git clone https://github.com/justinrgarrard/scriter.git
 ```
 
-4. Run the Ansible playbook in setup/ to install and configure Scriter
+4. Run the Ansible playbook to install and configure Scriter
 
 ```
-# cd /setup
+# cd setup/
 # ansible-playbook main.yml --become
 ```
 
@@ -50,24 +50,28 @@ same server.
 1. Collect data using the web scraper
 
 ```
+[scriter]$ cd web_scraper/
 [scriter]$ scrapy runspider web_scrape.py -o links.csv -s CLOSESPIDER_PAGECOUNT=100 -a job_title='software+engineer'
 ```
 
 2. Load data into the Postgres DB
 
 ```
+[scriter]$ cd web_scraper/
 [scriter]$ python data_load.py links.csv software_engineer
 ```
 
 3. Perform data transformations
 
 ```
+[scriter]$ cd data_modeler/
 [scriter]$ python model_build.py software_engineer
 ```
 
 4. Launch web server
 
 ```
+[scriter]$ cd web_server/
 [scriter]$ python manage.py runserver
 ```
 
