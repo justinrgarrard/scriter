@@ -16,6 +16,7 @@ def chart_data(request):
     dataset = Job.objects
     metric = 'TFIDF'
     title = 'Software Engineer Keywords [{}]'.format(metric)
+    subtitle = 'Record Count = {0}'.format(dataset.values_list('Document Count'))
     keys = list(dataset.values_list('Keyword', flat=True))
     vals = list(dataset.values_list('TFIDF', flat=True))
     matched = list(zip(keys, vals))
@@ -33,6 +34,7 @@ def chart_data(request):
     chart = {
         'chart': {'type': 'column'},
         'title': {'text': title},
+        'subtitle': {'text': subtitle},
         'xAxis': {'categories': keys_matched},
         'series': [{
             'name': metric,
@@ -41,7 +43,4 @@ def chart_data(request):
     }
 
     return JsonResponse(chart)
-
-# def index(request):
-#     return HttpResponse("Hello, world. Index page for jobviewer.")
 
