@@ -17,15 +17,26 @@ def chart_data(request):
     metric = 'TFIDF'
     title = 'Software Engineer Keywords [{}]'.format(metric)
     keys = list(dataset.values_list('Keyword', flat=True))
-    vals =list(dataset.values_list('TFIDF', flat=True))
+    vals = list(dataset.values_list('TFIDF', flat=True))
+    matched = zip(keys, vals)
+
+    # Sort by Key
+    # sorted(matched, key=lambda x: x[0])
+
+    # Sort by Val
+    sorted(matched, key=lambda x: x[1])
+
+    # Break zipped list back apart
+    keys_matched = [x[0] for x in matched]
+    vals_matched = [x[1] for x in matched]
 
     chart = {
         'chart': {'type': 'column'},
         'title': {'text': title},
-        'xAxis': {'categories': keys},
+        'xAxis': {'categories': keys_matched},
         'series': [{
             'name': metric,
-            'data': vals
+            'data': vals_matched
         }]
     }
 
