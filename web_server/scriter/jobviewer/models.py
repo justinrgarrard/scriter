@@ -12,4 +12,4 @@ class Job(models.Model):
     DF = models.IntegerField()
     IDF = models.FloatField()
     TFIDF = models.FloatField()
-    DOCUMENT_COUNT = models.IntegerField
+    DOCUMENT_COUNT = models.IntegerField()
