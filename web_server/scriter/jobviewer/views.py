@@ -15,7 +15,7 @@ def chart_data(request):
     dataset = Job.objects
     metric = 'TFIDF'
     title = 'Software Engineer Keywords [{}]'.format(metric)
-    subtitle = 'Record Count = {0}'.format(dataset.values_list('Document_Count')[0])
+    subtitle = 'Record Count = {0}'.format(dataset.values_list('DOCUMENT_COUNT')[0])
     keys = list(dataset.values_list('Keyword', flat=True))
     vals = list(dataset.values_list('TFIDF', flat=True))
     matched = list(zip(keys, vals))

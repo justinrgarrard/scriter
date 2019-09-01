@@ -97,7 +97,7 @@ def main(job_title):
     output['DF'] = output['Keyword'].apply(lambda x: uniq_counts[x])
     output['IDF'] = output['Keyword'].apply(lambda x: idf_vals[x])
     output['TFIDF'] = output['Keyword'].apply(lambda x: tfidf_vals[x])
-    output['Document_Count'] = num_documents
+    output['DOCUMENT_COUNT'] = num_documents
 
     LOGGER.info('Output Data Shape:')
     LOGGER.info(output.shape)
