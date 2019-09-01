@@ -12,25 +12,35 @@ def job_json(request):
 
 
 def chart_data(request):
+    # Queried object
     dataset = Job.objects
+
+    # Query string parameters
+    params = request.GET
+    metric = params['metric']
+    sort_style = params['sortstyle']
+
+    # Pull chart info from the query set and query string
     record_count = list(dataset.values_list('DOCUMENT_COUNT', flat=True))[-1]
     keys = list(dataset.values_list('Keyword', flat=True))
-    vals = list(dataset.values_list('TFIDF', flat=True))
+    vals = list(dataset.values_list(metric, flat=True))
     matched = list(zip(keys, vals))
-    metric = 'TFIDF'
+
     title = 'Software Engineer Keywords [{}]'.format(metric)
     subtitle = 'Record Count = {0}'.format(record_count)
 
-    # Sort by Key
-    # sorted(matched, key=lambda x: x[0])
-
-    # Sort by Val
-    matched = sorted(matched, key=lambda x: x[1])
+    if sort_style == 'ordered':
+        # Sort by Val, least to most
+        matched = sorted(matched, key=lambda x: x[1])
+    else:
+        # Sort by Key, alphabetically
+        matched = sorted(matched, key=lambda x: x[0])
 
     # Break zipped list back into keys and values
     keys_matched = [x[0] for x in matched]
     vals_matched = [x[1] for x in matched]
 
+    # Generate the chart
     chart = {
         'chart': {'type': 'column'},
         'title': {'text': title},
@@ -41,6 +51,5 @@ def chart_data(request):
             'data': vals_matched
         }]
     }
-
     return JsonResponse(chart)
 

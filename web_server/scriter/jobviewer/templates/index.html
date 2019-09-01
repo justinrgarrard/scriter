@@ -8,6 +8,41 @@
 </head>
 <body>
   <div id="container" data-url="{% url 'chart_data' %}"></div>
+  <div class="row">
+   <div class="col-sm-4">
+    <select class="form-control" id="title-selector">
+     <option value="software_engineer_">
+      Software Engineer
+     </option>
+    </select>
+   </div>
+   <div class="col-sm-4">
+    <select class="form-control" id="order-selector">
+     <option value="ordered">
+      Numerical
+     </option>
+     <option value="alpha">
+      Alphabetical
+     </option>
+    </select>
+   </div>
+   <div class="col-sm-4">
+    <select class="form-control" id="metric-selector">
+     <option value="TFIDF">
+      TFIDF
+     </option>
+      <option value="TF">
+      TF
+     </option>
+      <option value="DF">
+      DF
+     </option>
+      <option value="IDF">
+      IDF
+     </option>
+    </select>
+   </div>
+  </div>
   <div class="text-center" id="footer">
    <a href="https://github.com/justinrgarrard/scriter">
     The Code
@@ -21,7 +56,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script>
     $.ajax({
-      url: $("#container").attr("data-url"),
+      url: $("#container").attr("data-url").concat('?metric=TFIDF&sortstyle=ordered'),
       dataType: 'json',
       success: function (data) {
         Highcharts.chart("container", data);
