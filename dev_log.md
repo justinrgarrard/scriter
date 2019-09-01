@@ -13,6 +13,7 @@
 | Done | Parametrize Web Scrape (Job Title) |
 | TBD | Cron Web Scrape |
 | TBD | Parametrize for Multiple Sources |
+| TBD | Text Similarity Filter for Improved Duplicate Detection |
 
 
 **Data Access**

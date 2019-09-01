@@ -13,12 +13,13 @@ def job_json(request):
 
 def chart_data(request):
     dataset = Job.objects
-    metric = 'TFIDF'
-    title = 'Software Engineer Keywords [{}]'.format(metric)
-    subtitle = 'Record Count = {0}'.format(dataset.values_list('DOCUMENT_COUNT')[0])
+    record_count = list(dataset.values_list('DOCUMENT_COUNT', flat=True))[-1]
     keys = list(dataset.values_list('Keyword', flat=True))
     vals = list(dataset.values_list('TFIDF', flat=True))
     matched = list(zip(keys, vals))
+    metric = 'TFIDF'
+    title = 'Software Engineer Keywords [{}]'.format(metric)
+    subtitle = 'Record Count = {0}'.format(record_count)
 
     # Sort by Key
     # sorted(matched, key=lambda x: x[0])

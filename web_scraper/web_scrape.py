@@ -2,7 +2,7 @@
 """
 A script that scrapes a specified website for job posting data.
 
-scrapy runspider web_scrape.py -o links.csv -s CLOSESPIDER_PAGECOUNT=100 -a job_title='software+engineer'
+scrapy runspider web_scrape.py -o links.csv -s CLOSESPIDER_PAGECOUNT=1000 -a job_title='software+engineer'
 """
 import scrapy
 
