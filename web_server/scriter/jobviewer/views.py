@@ -18,15 +18,15 @@ def chart_data(request):
     title = 'Software Engineer Keywords [{}]'.format(metric)
     keys = list(dataset.values_list('Keyword', flat=True))
     vals = list(dataset.values_list('TFIDF', flat=True))
-    matched = zip(keys, vals)
+    matched = list(zip(keys, vals))
 
     # Sort by Key
     # sorted(matched, key=lambda x: x[0])
 
     # Sort by Val
-    sorted(matched, key=lambda x: x[1])
+    matched = sorted(matched, key=lambda x: x[1])
 
-    # Break zipped list back apart
+    # Break zipped list back into keys and values
     keys_matched = [x[0] for x in matched]
     vals_matched = [x[1] for x in matched]
 
