@@ -17,6 +17,7 @@ def chart_data(request):
 
     # Query string parameters
     params = request.GET
+    job = params['job'].replace('+', ' ')
     metric = params['metric']
     sort_style = params['sortstyle']
 
@@ -26,7 +27,7 @@ def chart_data(request):
     vals = list(dataset.values_list(metric, flat=True))
     matched = list(zip(keys, vals))
 
-    title = 'Software Engineer Keywords [{}]'.format(metric)
+    title = '{0} Keywords [{1}]'.format(job, metric)
     subtitle = 'Record Count = {0}'.format(record_count)
 
     if sort_style == 'ordered':
