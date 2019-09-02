@@ -4,7 +4,7 @@ from django.db import models
 class Job(models.Model):
     # Temporary hard coded values
     class Meta:
-        db_table = 'software_engineer'
+        db_table = 'posting_statistics'
         managed = False
 
     Keyword = models.CharField(max_length=100)
@@ -13,3 +13,4 @@ class Job(models.Model):
     IDF = models.FloatField()
     TFIDF = models.FloatField()
     DOCUMENT_COUNT = models.IntegerField()
+    JOB_TITLE = models.CharField(max_length=100)

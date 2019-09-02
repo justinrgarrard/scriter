@@ -21,6 +21,7 @@ DB_USER = os.environ['DB_USER']
 DB_PASS = os.environ['DB_PASS']
 INGEST_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_ingest'.format(DB_USER, DB_PASS)
 MODEL_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_web'.format(DB_USER, DB_PASS)
+MODEL_DB_NAME = 'posting_statistics'
 
 
 def parse_args():
@@ -98,13 +99,14 @@ def main(job_title):
     output['IDF'] = output['Keyword'].apply(lambda x: idf_vals[x])
     output['TFIDF'] = output['Keyword'].apply(lambda x: tfidf_vals[x])
     output['DOCUMENT_COUNT'] = num_documents
+    output['JOB_TITLE'] = job_title
 
     LOGGER.info('Output Data Shape:')
     LOGGER.info(output.shape)
 
     # Store output
     engine2 = create_engine(MODEL_DB_CONN_STR)
-    output.to_sql(job_title, con=engine2, if_exists='replace', index=False)
+    output.to_sql(MODEL_DB_NAME, con=engine2, if_exists='append', index=False)
 
     LOGGER.info('<<<Finished model build.')
 

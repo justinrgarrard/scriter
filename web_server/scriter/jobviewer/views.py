@@ -15,8 +15,11 @@ def chart_data(request):
     # Queried object
     dataset = Job.objects
 
-    # Query string parameters
+    # Narrow down to results with the matching job title key
     params = request.GET
+    dataset = dataset.filter(JOB_TITLE=params['job'].replace('+', '_'))
+
+    # Capture query string parameters
     job = params['job'].replace('+', ' ')
     metric = params['metric']
     sort_style = params['sortstyle']
