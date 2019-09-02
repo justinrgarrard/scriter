@@ -27,7 +27,7 @@ def chart_data(request):
     vals = list(dataset.values_list(metric, flat=True))
     matched = list(zip(keys, vals))
 
-    title = '{0} Keywords [{1}]'.format(job, metric)
+    title = '{0} Keywords'.format(job)
     subtitle = 'Record Count = {0}'.format(record_count)
 
     if sort_style == 'ordered':
@@ -36,6 +36,9 @@ def chart_data(request):
     else:
         # Sort by Key, alphabetically
         matched = sorted(matched, key=lambda x: x[0])
+
+    # Map metric to color
+    color_matcher = {'TFIDF': '#7cb5ec', 'TF': '#f79039', 'DF': '#90ed7d', 'IDF': '#8085e9'}
 
     # Break zipped list back into keys and values
     keys_matched = [x[0] for x in matched]
@@ -47,6 +50,7 @@ def chart_data(request):
         'title': {'text': title},
         'subtitle': {'text': subtitle},
         'xAxis': {'categories': keys_matched},
+        'plotOptions': {'series': {'color': color_matcher[metric]}},
         'series': [{
             'name': metric,
             'data': vals_matched
