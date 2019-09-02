@@ -4,65 +4,79 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Scriter</title>
+    <meta charset="utf-8">
+    <title>Scriter</title>
 </head>
-<body>
-  <div id="container" data-url="{% url 'chart_data' %}"></div>
-  <div class="row">
-   <div class="col-sm-4">
-    <select class="form-control" id="title-selector">
-     <option value="software_engineer_">
-      Software Engineer
-     </option>
-    </select>
-   </div>
-   <div class="col-sm-4">
-    <select class="form-control" id="order-selector">
-     <option value="ordered">
-      Numerical
-     </option>
-     <option value="alpha">
-      Alphabetical
-     </option>
-    </select>
-   </div>
-   <div class="col-sm-4">
-    <select class="form-control" id="metric-selector">
-     <option value="TFIDF">
-      TFIDF
-     </option>
-      <option value="TF">
-      TF
-     </option>
-      <option value="DF">
-      DF
-     </option>
-      <option value="IDF">
-      IDF
-     </option>
-    </select>
-   </div>
-  </div>
-  <div class="text-center" id="footer">
-   <a href="https://github.com/justinrgarrard/scriter">
-    The Code
-   </a>
-  </div>
-  <script src="https://code.highcharts.com/highcharts.src.js"></script>
-  <script src="https://code.highcharts.com/modules/exporting.js"></script>
-  <script src="https://code.highcharts.com/modules/export-data.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script>
-    $.ajax({
-      url: $("#container").attr("data-url").concat('?job=Software+Engineer&metric=TFIDF&sortstyle=ordered'),
+<body onload="refreshChart()">
+<div id="container" data-url="{% url 'chart_data' %}"></div>
+<div class="row">
+    <div class="col-sm-4">
+        <select class="form-control" id="title-selector" onchange="refreshChart()">
+            <option value="Software+Engineer">
+                Software Engineer
+            </option>
+        </select>
+    </div>
+    <div class="col-sm-4">
+        <select class="form-control" id="order-selector" onchange="refreshChart()">
+            <option value="ordered">
+                Numerical
+            </option>
+            <option value="alpha">
+                Alphabetical
+            </option>
+        </select>
+    </div>
+    <div class="col-sm-4">
+        <select class="form-control" id="metric-selector" onchange="refreshChart()">
+            <option value="TFIDF">
+                TFIDF
+            </option>
+            <option value="TF">
+                TF
+            </option>
+            <option value="DF">
+                DF
+            </option>
+            <option value="IDF">
+                IDF
+            </option>
+        </select>
+    </div>
+</div>
+<div class="text-center" id="footer">
+    <a href="https://github.com/justinrgarrard/scriter">
+        The Code
+    </a>
+</div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  function refreshChart() {
+      title_options = document.getElementById("title-selector").options;
+      title_index = document.getElementById("title-selector").selectedIndex;
+      title_selection = title_options[title_index].value;
+
+      order_options = document.getElementById("order-selector").options;
+      order_index = document.getElementById("order-selector").selectedIndex;
+      order_selection = order_options[order_index].value;
+
+      metric_options = document.getElementById("metric-selector").options;
+      metric_index = document.getElementById("metric-selector").selectedIndex;
+      metric_selection = metric_options[metric_index].value;
+
+      $.ajax({
+      url: $("#container").attr("data-url").concat(`?job=${title_selection}&metric=${metric_selection}&sortstyle=${order_selection}`),
       dataType: 'json',
       success: function (data) {
         Highcharts.chart("container", data);
       }
     });
-  </script>
+  }
+</script>
 </body>
 </html>

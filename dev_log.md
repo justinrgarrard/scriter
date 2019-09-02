@@ -13,7 +13,6 @@
 | Done | Parametrize Web Scrape (Job Title) |
 | TBD | Cron Web Scrape |
 | TBD | Parametrize for Multiple Sources |
-| TBD | Text Similarity Filter for Improved Duplicate Detection |
 
 
 **Data Access**
@@ -48,7 +47,12 @@
 | DONE | Swap SQLite for PostgreSQL |
 | DONE | Properly handle DB credentials |
 | DONE | Ansible file for server setup |
-| TBD | Investigate containerization |
+
+
+** Ideas **
+| TBD | Investigate Containerization |
+| TBD | Date Range Sort |
+| TBD | Text Similarity Filter for Improved Duplicate Detection |
 
 
 ### History
