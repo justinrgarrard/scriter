@@ -17,10 +17,10 @@ LOG_FORMAT = '%(asctime)s: %(filename)s [%(funcName)s]- %(message)s'
 logging.basicConfig(format=LOG_FORMAT, level=logging.DEBUG)
 LOGGER = logging.getLogger()
 TECH_LISTING = 'tech.json'
-db_user = os.environ['DB_USER']
-db_pass = os.environ['DB_PASS']
-INGEST_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_ingest'.format(db_user, db_pass)
-MODEL_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_web'.format(db_user, db_pass)
+DB_USER = os.environ['DB_USER']
+DB_PASS = os.environ['DB_PASS']
+INGEST_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_ingest'.format(DB_USER, DB_PASS)
+MODEL_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_web'.format(DB_USER, DB_PASS)
 
 
 def parse_args():
