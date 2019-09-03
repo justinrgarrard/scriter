@@ -33,8 +33,8 @@
 | DONE | Create locally hosted site |
 | DONE | Load data into web server DB |
 | DONE | Visualize TF-IDF models |
-| WIP | Develop UI model |
-| TBD | Parametrize for different job titles |
+| DONE | Develop UI model |
+| WIP | Parametrize for different job titles |
 | TBD | Deploy site to scriter.net domain |
 
 
