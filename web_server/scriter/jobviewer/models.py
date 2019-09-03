@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Job(models.Model):
-    # Temporary hard coded values
+    # # Temporary hard coded values
     class Meta:
         db_table = 'software_engineer'
         managed = False
