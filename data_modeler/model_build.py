@@ -10,7 +10,9 @@ import logging
 import argparse
 import numpy as np
 import pandas as pd
+from django.db import models
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from sklearn.feature_extraction.text import CountVectorizer
 
 LOG_FORMAT = '%(asctime)s: %(filename)s [%(funcName)s]- %(message)s'
@@ -104,9 +106,28 @@ def main(job_title):
     LOGGER.info('Output Data Shape:')
     LOGGER.info(output.shape)
 
-    # Store output
+    # Replace old entries with new entries
     engine2 = create_engine(MODEL_DB_CONN_STR)
-    output.to_sql(MODEL_DB_NAME, con=engine2, if_exists='append', index=False)
+    # Session = sessionmaker(bind=engine2)
+    # session = Session()
+    #
+    # ## Hate to duplicate code like this, is there a fancy import
+    # ## that will work more smoothly?
+    # class Job(models.Model):
+    #     class Meta:
+    #         db_table = 'posting_statistics'
+    #         managed = False
+    #
+    #     Keyword = models.CharField(max_length=100)
+    #     TF = models.IntegerField()
+    #     DF = models.IntegerField()
+    #     IDF = models.FloatField()
+    #     TFIDF = models.FloatField()
+    #     DOCUMENT_COUNT = models.IntegerField()
+    #     JOB_TITLE = models.CharField(max_length=100)
+    #
+    # old = session.query(Job).filter(JOB_TITLE=job_title)
+    output.to_sql(MODEL_DB_NAME, con=engine2, if_exists='append', index_label='id')
 
     LOGGER.info('<<<Finished model build.')
 

@@ -17,7 +17,7 @@ def chart_data(request):
 
     # Narrow down to results with the matching job title key
     params = request.GET
-    dataset = dataset.filter(JOB_TITLE=params['job'].replace('+', '_'))
+    dataset = dataset.filter(JOB_TITLE=params['job'].replace(' ', '_').lower())
 
     # Capture query string parameters
     job = params['job'].replace('+', ' ')

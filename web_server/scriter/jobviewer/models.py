@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Job(models.Model):
-    # Temporary hard coded values
     class Meta:
         db_table = 'posting_statistics'
         managed = False
