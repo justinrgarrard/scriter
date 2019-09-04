@@ -14,8 +14,8 @@ def job_json(request):
 def chart_data(request):
     # Queried object
     params = request.GET
-    job_table = params['job'].replace(' ', '_')
-    Job.Meta.db_table = job_table
+    job_table = params['job'].replace(' ', '_').lower()
+    Job._meta.db_table = job_table
     dataset = Job.objects
 
     # Query string parameters
