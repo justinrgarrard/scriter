@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from .models import Job
-
+# from .models import Job
+from .models import create_model
 
 def home_page(request):
     return render(request, 'index.html')
@@ -15,7 +15,9 @@ def chart_data(request):
     # Queried object
     params = request.GET
     job_table = params['job'].replace(' ', '_').lower()
-    Job._meta.db_table = job_table
+    # Job._meta.db_table = job_table
+    # dataset = Job.objects
+    Job = create_model(job_table)
     dataset = Job.objects
 
     # Query string parameters
