@@ -99,7 +99,15 @@ justify a detour.
 
 * Use a TF-IDF model instead of a unique frequency counter
 
-A nearly production grade data pipeline application. After working as
-a Hadoop system admin, I felt more comfortable acting outside programming
-environments. This incarnation makes use of databases and web servers. Ansible
-is utilized to simplify the installation process.
+A production grade data pipeline application. This incarnation makes
+use of databases, web frameworks, and Ansible. The increased emphasis
+on infrastructure stems from work experience as a Hadoop Admin.
+
+
+### Chickenscratch
+
+#### Django
+
+Django may not have been the best fit for a front-end framework. I had
+hoped to use one table per job title in web server, but there doesn't seem
+to be an easy way to implement that.
