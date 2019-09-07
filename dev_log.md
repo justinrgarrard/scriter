@@ -34,7 +34,7 @@
 | DONE | Load data into web server DB |
 | DONE | Visualize TF-IDF models |
 | DONE | Develop UI model |
-| WIP | Parametrize for different job titles |
+| DONE | Parametrize for different job titles |
 | TBD | Deploy site to scriter.net domain |
 
 
