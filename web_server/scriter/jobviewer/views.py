@@ -4,6 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from .models import create_model
 from django.db.models.query import QuerySet
 
+
 def home_page(request):
     return render(request, 'index.html')
 

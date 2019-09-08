@@ -24,6 +24,11 @@ MODEL_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_web'.format(DB_USER,
 
 
 def parse_args():
+    """
+    Parse input arguments.
+
+    :return: args: A Dictionary-like object that stores input parameters as attributes.
+    """
     parser = argparse.ArgumentParser(
         description='Script that converts job posting data into NLP models.')
     parser.add_argument('job_title', type=str,
@@ -34,6 +39,7 @@ def parse_args():
 
 def get_filepath(input_filename):
     """
+    Helper function that gets the full path of a file, given its filename.
 
     :param input_filename:
     :return:

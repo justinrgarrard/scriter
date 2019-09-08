@@ -17,6 +17,7 @@ class IndeedJobPostSpider(scrapy.Spider):
     def __init__(self, job_title='', **kwargs):
         """
         Override default constructor to parse an extra input arguments.
+
         :param job_title:
         :param kwargs:
         """

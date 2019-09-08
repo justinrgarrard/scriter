@@ -25,6 +25,11 @@ INGEST_DB_CONN_STR = 'postgresql://{0}:{1}@localhost/scriter_ingest'.format(DB_U
 
 
 def parse_args():
+    """
+    Parse input arguments.
+
+    :return: args: A Dictionary-like object that stores input parameters as attributes.
+    """
     parser = argparse.ArgumentParser(
         description='Script that does basic preprocessing '
                     'of data and loads it into storage.')
@@ -38,6 +43,7 @@ def parse_args():
 
 def get_filepath(input_filename):
     """
+    Helper function that gets the full path of a file, given its filename.
 
     :param input_filename:
     :return:
@@ -48,6 +54,12 @@ def get_filepath(input_filename):
 
 
 def data_clean(input_filename):
+    """
+    Load data from file, removing unnecessary boilerplate from the HTML.
+
+    :param input_filename: The filename, as a String.
+    :return: data: A Dictionary containing cleaned extracts from the input file.
+    """
     LOGGER.info('>> Starting data clean.')
 
     # Load data
@@ -72,6 +84,13 @@ def data_clean(input_filename):
 
 
 def data_load(filtered_data, job_title):
+    """
+    Store filtered data in a relational database.
+
+    :param filtered_data: A Dictionary containing cleaned extracts from the input file.
+    :param job_title: The job title affiliated with this posting.
+    :return: None.
+    """
     LOGGER.info('>> Starting data load.')
 
     # Open connection to database
