@@ -43,7 +43,7 @@
 | Status  | Task |
 |---|---|
 | DONE | Reorganize file structure by component |
-| TBD | Develop test suite |
+| WIP | Develop test suite |
 | DONE | Swap SQLite for PostgreSQL |
 | DONE | Properly handle DB credentials |
 | DONE | Ansible file for server setup |

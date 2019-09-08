@@ -1,6 +1,6 @@
 *.xml
 *.pyc
-*.csv
 *.db
 venv/
 setup/main.retry
+web_scraper/*.csv
