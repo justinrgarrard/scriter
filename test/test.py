@@ -2,7 +2,10 @@
 A test suite script for assessing basic functionality and use cases.
 """
 
+import os
+import shutil
 import unittest
+import subprocess
 
 
 class TestWebScrape(unittest.TestCase):
@@ -11,7 +14,10 @@ class TestWebScrape(unittest.TestCase):
         Basic Completion
         :return:
         """
-        pass
+        cmd = "scrapy runspider web_scrape.py -o test.csv -s CLOSESPIDER_PAGECOUNT=50 -a job_title='software+engineer'"
+        output = subprocess.check_output(cmd, cwd='../web_scraper', shell=True)
+        self.assertTrue(os.path.exists('../web_scraper/test.csv'))
+        os.remove('../web_scraper/test.csv')
 
     def test_scrape_count(self):
         """
