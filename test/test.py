@@ -31,11 +31,11 @@ class TestWebScrape(unittest.TestCase):
         Basic Functional Test
         :return:
         """
-        # Command to run
-        cmd = "scrapy runspider web_scrape.py -o test_links.csv -s CLOSESPIDER_PAGECOUNT=50 -a job_title='software+engineer'  >> ../test/test_log.txt 2>&1"
+        # Prior setup
         target_dir = '../web_scraper'
 
         # Execute and store any output
+        cmd = "scrapy runspider web_scrape.py -o test_links.csv -s CLOSESPIDER_PAGECOUNT=50 -a job_title='software+engineer'  >> ../test/test_log.txt 2>&1"
         output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
 
         # Assert results match expectations
@@ -52,17 +52,17 @@ class TestDataLoad(unittest.TestCase):
         Basic Functional Test
         :return:
         """
-        # Command to run
-        cmd = "python data_load.py test_links.csv test_title >> ../test/test_log.txt 2>&1"
-        target_dir = '../web_scraper'
-
         # Prior setup
-        tbl_drop_cmd = "psql -d scriter_ingest -c 'DROP TABLE IF EXISTS test_title'"
-        output = subprocess.check_output(tbl_drop_cmd, cwd=target_dir, shell=True)
+        target_dir = '../web_scraper'
         shutil.copy('test_links.csv', '../web_scraper')
         self.assertTrue(os.path.exists('../web_scraper/test_links.csv'))
 
+        # Drop test table if it already exists
+        tbl_drop_cmd = "psql -d scriter_ingest -c 'DROP TABLE IF EXISTS test_title'"
+        output = subprocess.check_output(tbl_drop_cmd, cwd=target_dir, shell=True)
+
         # Execute and store any output
+        cmd = "python data_load.py test_links.csv test_title >> ../test/test_log.txt 2>&1"
         output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
 
         # Assert results match expectations
@@ -70,8 +70,8 @@ class TestDataLoad(unittest.TestCase):
         ## TODO: Duplicate Detection
 
         # Cleanup
-        os.remove('../web_scraper/test_links.csv')
         output = subprocess.check_output(tbl_drop_cmd, cwd=target_dir, shell=True)
+        os.remove('../web_scraper/test_links.csv')
 
 
 class TestModelBuild(unittest.TestCase):
