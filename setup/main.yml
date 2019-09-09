@@ -1,13 +1,13 @@
 ---
 ### Playbook for configuring a server to work with Scriter
 #
-# Be sure to change credentials in vars when deploying to production
+# Be sure to change the password in vars when deploying to production
 #
 
 - hosts: localhost 
   remote_user: root
   vars:
-    db_username: scriter_user
+    db_username: scriter
     db_password: scriter_pass
     web_db: scriter_web
   tasks:
