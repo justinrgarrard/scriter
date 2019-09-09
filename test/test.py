@@ -32,7 +32,7 @@ class TestWebScrape(unittest.TestCase):
         :return:
         """
         # Command to run
-        cmd = "scrapy runspider web_scrape.py -o test_links.csv -s CLOSESPIDER_PAGECOUNT=50 -a job_title='software+engineer'  > test_log.txt 2>&1"
+        cmd = "scrapy runspider web_scrape.py -o test_links.csv -s CLOSESPIDER_PAGECOUNT=50 -a job_title='software+engineer'  >> ../test/test_log.txt 2>&1"
         target_dir = '../web_scraper'
 
         # Execute and store any output
@@ -45,7 +45,6 @@ class TestWebScrape(unittest.TestCase):
 
         # Cleanup
         os.remove('../web_scraper/test_links.csv')
-        os.remove('../web_scraper/test_log.txt')
 
 
 class TestDataLoad(unittest.TestCase):
@@ -55,7 +54,7 @@ class TestDataLoad(unittest.TestCase):
         :return:
         """
         # Command to run
-        cmd = "python data_load.py test_links.csv test_title  > test_log.txt 2>&1"
+        cmd = "python data_load.py test_links.csv test_title >> ../test/test_log.txt 2>&1"
         target_dir = '../web_scraper'
 
         # Prior setup
@@ -74,7 +73,6 @@ class TestDataLoad(unittest.TestCase):
 
         # Cleanup
         os.remove('../web_scraper/test.csv')
-        os.remove('../web_scraper/test_log.txt')
         output = subprocess.check_output(tbl_drop_cmd, cwd=target_dir, shell=True)
 
 
