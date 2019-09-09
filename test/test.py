@@ -40,7 +40,6 @@ class TestWebScrape(unittest.TestCase):
 
         # Assert results match expectations
         self.assertTrue(os.path.exists('../web_scraper/test_links.csv'))
-        self.assertTrue(os.path.exists('../web_scraper/test_log.txt'))
         ## TODO: CLOSESPIDER_PAGECOUNT ~ Output Count
 
         # Cleanup
@@ -67,7 +66,6 @@ class TestDataLoad(unittest.TestCase):
 
         # Assert results match expectations
         self.assertTrue(os.path.exists('../web_scraper/test_links.csv'))
-        self.assertTrue(os.path.exists('../web_scraper/test_log.txt'))
         ## TODO: Input Shape ~ Output Shape
         ## TODO: Duplicate Detection
 
