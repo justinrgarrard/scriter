@@ -59,18 +59,18 @@ class TestDataLoad(unittest.TestCase):
         # Prior setup
         tbl_drop_cmd = "psql -d scriter_ingest -c 'DROP TABLE IF EXISTS test_title'"
         output = subprocess.check_output(tbl_drop_cmd, cwd=target_dir, shell=True)
-        shutil.copy('test_links.csv', '../web_server')
+        shutil.copy('test_links.csv', '../web_scraper')
+        self.assertTrue(os.path.exists('../web_scraper/test_links.csv'))
 
         # Execute and store any output
         output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
 
         # Assert results match expectations
-        self.assertTrue(os.path.exists('../web_scraper/test_links.csv'))
         ## TODO: Input Shape ~ Output Shape
         ## TODO: Duplicate Detection
 
         # Cleanup
-        os.remove('../web_scraper/test.csv')
+        os.remove('../web_scraper/test_links.csv')
         output = subprocess.check_output(tbl_drop_cmd, cwd=target_dir, shell=True)
 
 
