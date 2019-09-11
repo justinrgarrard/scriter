@@ -41,17 +41,19 @@
         virtualenv_python: python3
 
     # Configure Postgres DB's for project
-    - name: postgresql database (scriter_ingest)
+    - name: drop database if exists (scriter_ingest)
+      become: true
+      become_user: postgres
+      postgresql_db:
+        name: scriter_ingest
+        state: absent
+    - name: create database (scriter_ingest)
       become: true
       become_user: postgres
       postgresql_db: 
         name: scriter_ingest
-    - name: postgresql database (scriter_web)
-      become: true
-      become_user: postgres
-      postgresql_db:
-        name: scriter_web
-    - name: postgresql service account ingest
+        state: present
+    - name: configure service account (scriter_ingest)
       become: true
       become_user: postgres
       postgresql_user:
@@ -60,7 +62,21 @@
         password: "{{ db_password}}"
         priv: "ALL"
         encrypted: yes
-    - name: postgresql service account web
+        role_attr_flags: CREATEDB
+
+    - name: drop database if exists (scriter_web)
+      become: true
+      become_user: postgres
+      postgresql_db:
+        name: scriter_web
+        state: absent
+    - name: create database (scriter_web)
+      become: true
+      become_user: postgres
+      postgresql_db:
+        name: scriter_web
+        state: present
+    - name: configure service account (scriter_web)
       become: true
       become_user: postgres
       postgresql_user:
@@ -69,6 +85,7 @@
         password: "{{ db_password}}"
         priv: "ALL"
         encrypted: yes
+        role_attr_flags: CREATEDB
 
     # Configure Django environment variables
     - name: make profile.d/scriter.sh

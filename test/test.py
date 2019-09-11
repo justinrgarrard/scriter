@@ -10,7 +10,6 @@ import unittest
 import subprocess
 import json
 import logging
-import argparse
 import numpy as np
 import pandas as pd
 from sqlalchemy import create_engine
@@ -80,14 +79,25 @@ class TestModelBuild(unittest.TestCase):
         Basic Functional Test
         :return:
         """
-        pass
+        # Prior setup
+        target_dir = '../data_modeler'
+        shutil.copy('test_ingest.db', '../data_modeler')
+        self.assertTrue(os.path.exists('../data_modeler/test_ingest.db'))
+        db_load_cmd = "psql -d scriter_ingest < test_ingest.db"
+        output = subprocess.check_output(db_load_cmd, cwd=target_dir, shell=True)
 
-    # def test_expected_metrics(self):
-    #     """
-    #     Sample Metrics ~ Expected Metrics
-    #     :return:
-    #     """
-    #     pass
+        # Execute and store any output
+        cmd = "python model_build.py test_title >> ../test/test_log.txt 2>&1"
+        output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
+
+        # Assert results match expectations
+        ## TODO: Input Shape ~ Output Shape
+        ## TODO: Duplicate Detection
+        ## TODO: Expected Metrics
+
+        # Cleanup
+        db_drop_cmd = "psql -d scriter_ingest -c 'DROP TABLE IF EXISTS test_title'"
+        output = subprocess.check_output(db_drop_cmd, cwd=target_dir, shell=True)
 
 
 class TestWebServer(unittest.TestCase):
