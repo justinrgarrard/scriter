@@ -10,6 +10,7 @@ import logging
 import argparse
 import numpy as np
 import pandas as pd
+from nltk import TweetTokenizer
 from sqlalchemy import create_engine
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -65,10 +66,11 @@ def main(job_title):
     vocab = [key.lower() for key in techs]
     LOGGER.info('Number of Keywords:')
     LOGGER.info(len(vocab))
+    tweet_tk = TweetTokenizer()
 
     ## Total Counts (Term Frequency; TF)
     vectorizer = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
-                                 vocabulary=vocab)
+                                 vocabulary=vocab, tokenizer=tweet_tk.tokenize)
     count_vector = vectorizer.fit_transform(posting_data)
     ### TODO: Find a way to use the sparse matrix implementation to improve performance
     count_vector = count_vector.toarray()
@@ -80,7 +82,7 @@ def main(job_title):
 
     ## Unique Counts per Link (Document Frequency; DF)
     vectorizer_binary = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
-                                        vocabulary=vocab, binary=True)
+                                        vocabulary=vocab, tokenizer=tweet_tk.tokenize, binary=True)
     count_vector_binary = vectorizer_binary.fit_transform(posting_data)
     ### TODO: Find a way to use the sparse matrix implementation to improve performance
     count_vector_binary = count_vector_binary.toarray()

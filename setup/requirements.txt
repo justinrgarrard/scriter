@@ -1,3 +1,4 @@
+nltk
 scrapy
 numpy
 pandas

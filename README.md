@@ -53,7 +53,7 @@ same server.
 
 ```
 [scriter]$ cd web_scraper/
-[scriter]$ scrapy runspider web_scrape.py -o links.csv -s CLOSESPIDER_PAGECOUNT=100 -a job_title='software+engineer'
+[scriter]$ scrapy runspider web_scrape.py -o links.csv -s CLOSESPIDER_PAGECOUNT=1000 -a job_title='software+engineer'
 ```
 
 2. Load data into the Postgres DB
