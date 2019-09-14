@@ -1,3 +1,4 @@
+import numpy as np
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 # from .models import Job
@@ -41,6 +42,10 @@ def chart_data(request):
     else:
         # Sort by Key, alphabetically
         matched = sorted(matched, key=lambda x: x[0])
+
+    ## Null keys below the first quartile for easier viewing
+    cutoff = np.percentile(vals, 25)
+    matched = [(item[0], item[1]) for item in matched if item[1] > cutoff]
 
     # Map metric to color
     color_matcher = {'TFIDF': '#7cb5ec', 'TF': '#f79039', 'DF': '#90ed7d', 'IDF': '#8085e9'}
