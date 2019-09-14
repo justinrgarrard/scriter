@@ -43,7 +43,7 @@
 | Status  | Task |
 |---|---|
 | DONE | Reorganize file structure by component |
-| WIP | Develop test suite |
+| WIP | Develop basic test suite |
 | DONE | Swap SQLite for PostgreSQL |
 | DONE | Properly handle DB credentials |
 | DONE | Ansible file for server setup |
@@ -53,6 +53,7 @@
 | TBD | Investigate Containerization |
 | TBD | Date Range Sort |
 | TBD | Text Similarity Filter for Improved Duplicate Detection |
+| TBD | More Thorough Test Suite |
 
 
 ### History

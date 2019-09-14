@@ -70,6 +70,7 @@ def main(job_title):
     vectorizer = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
                                  vocabulary=vocab)
     count_vector = vectorizer.fit_transform(posting_data)
+    ### TODO: Find a way to use the sparse matrix implementation to improve performance
     count_vector = count_vector.toarray()
     tf_array = np.sum(count_vector, axis=0)
     counts = {key: tf_array[val] for key, val in vectorizer.vocabulary_.items()}
@@ -81,6 +82,7 @@ def main(job_title):
     vectorizer_binary = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
                                         vocabulary=vocab, binary=True)
     count_vector_binary = vectorizer_binary.fit_transform(posting_data)
+    ### TODO: Find a way to use the sparse matrix implementation to improve performance
     count_vector_binary = count_vector_binary.toarray()
     df_array = np.sum(count_vector_binary, axis=0)
     uniq_counts = {key: df_array[val] for key, val in vectorizer.vocabulary_.items()}

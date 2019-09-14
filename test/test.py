@@ -106,14 +106,24 @@ class TestWebServer(unittest.TestCase):
         Basic Functional Test
         :return:
         """
-        pass
+        # Prior setup
+        target_dir = '../web_server/scriter'
+        shutil.copy('test_web.db', '../web_server/scriter')
+        self.assertTrue(os.path.exists('../web_server/scriter/test_web.db'))
+        db_load_cmd = "psql -d scriter_web < test_web.db"
+        output = subprocess.check_output(db_load_cmd, cwd=target_dir, shell=True)
 
-    # def test_ui(self):
-    #     """
-    #     Basic UI Functionality
-    #     :return:
-    #     """
-    #     pass
+        # Execute and store any output
+        cmd = "python manage.py test >> ../test/test_log.txt 2>&1"
+        output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
+
+        # Assert results match expectations
+        ## TODO: Expected Metrics
+
+        # Cleanup
+        db_drop_cmd = "psql -d scriter_web -c 'DROP TABLE IF EXISTS software_engineer'"
+        db_drop_cmd = "psql -d scriter_web -c 'DROP TABLE IF EXISTS front_end_developer'"
+        output = subprocess.check_output(db_drop_cmd, cwd=target_dir, shell=True)
 
 
 if __name__ == '__main__':
