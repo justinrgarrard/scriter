@@ -114,7 +114,7 @@ class TestWebServer(unittest.TestCase):
         output = subprocess.check_output(db_load_cmd, cwd=target_dir, shell=True)
 
         # Execute and store any output
-        cmd = "python manage.py test >> ../test/test_log.txt 2>&1"
+        cmd = "python manage.py test >> ../../test/test_log.txt 2>&1"
         output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
 
         # Assert results match expectations
