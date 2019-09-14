@@ -70,8 +70,10 @@
   "MySQL":"MySQL",
   "PostgreSQL":"PostgreSQL",
   "Microsoft SQL":"Microsoft SQL",
+  "MSSQL": "MSSQL",
   "SQLite":"SQLite",
   "MongoDB":"MongoDB",
+  "NoSQL": "NoSQL",
   "Redis":"Redis",
   "MariaDB":"MariaDB",
   "Oracle":"Oracle",
@@ -100,5 +102,6 @@
   "IBM":"IBM",
   "Blockchain":"Blockchain",
   "F#":"F#",
-  "Erlang":"Erlang"
+  "Erlang":"Erlang",
+  "Cisco": "Cisco"
 }
