@@ -101,7 +101,7 @@ justify a detour.
 
 A production grade data pipeline application. This incarnation makes
 use of databases, web frameworks, and Ansible. The increased emphasis
-on infrastructure stems from work experience as a Hadoop Admin.
+on infrastructure stems from my work experience as a Hadoop Admin.
 
 
 ### Chickenscratch
@@ -111,3 +111,16 @@ on infrastructure stems from work experience as a Hadoop Admin.
 Django may not have been the best fit for a front-end framework. I had
 hoped to use one table per job title in web server, but there doesn't seem
 to be an easy way to implement that.
+
+#### NLTK, CountVectorizer, TfidfVectorizer, and TfidfTransformer
+
+Having had some prior experience with NLTK, I wanted to try sklearn's tooling
+for a common NLP task. I like the way their framework is organized. All the
+components have consistent function names, and the documentation is top notch.
+
+That being said, I was a little disappointed that there was no easy way to pull
+term frequencies or document frequencies from the vectorizer tools. I wound up
+implementing that functionality by scratch. Doing so gave me the urge to do IDF
+and TFIDF from the ground-up. Not necessarily the most efficient use of time, but
+it felt good to do the basics by hand. I'm sure there are also some losses in runtime
+speed.

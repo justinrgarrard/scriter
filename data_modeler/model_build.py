@@ -65,27 +65,34 @@ def main(job_title):
     vocab = [key.lower() for key in techs]
     LOGGER.info('Number of Keywords:')
     LOGGER.info(len(vocab))
+
+    ## Total Counts (Term Frequency; TF)
     vectorizer = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
                                  vocabulary=vocab)
     count_vector = vectorizer.fit_transform(posting_data)
-
-    ## Total Counts (Term Frequency; TF)
-    counts = {key: count_vector[val].sum() for key, val in vectorizer.vocabulary_.items()}
+    count_vector = count_vector.toarray()
+    tf_array = np.sum(count_vector, axis=0)
+    counts = {key: tf_array[val] for key, val in vectorizer.vocabulary_.items()}
     sorted_counts = sorted(counts.items(), key=lambda x: (x[1], x[0]), reverse=True)
     LOGGER.info('Term Frequencies:')
     LOGGER.info(sorted_counts)
 
-    ## Unique Counts (Document Frequency; DF)
-    uniq_counts = {key: count_vector[val].count_nonzero() for key, val in vectorizer.vocabulary_.items()}
+    ## Unique Counts per Link (Document Frequency; DF)
+    vectorizer_binary = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
+                                        vocabulary=vocab, binary=True)
+    count_vector_binary = vectorizer_binary.fit_transform(posting_data)
+    count_vector_binary = count_vector_binary.toarray()
+    df_array = np.sum(count_vector_binary, axis=0)
+    uniq_counts = {key: df_array[val] for key, val in vectorizer.vocabulary_.items()}
     sorted_uniq_counts = sorted(uniq_counts.items(), key=lambda x: (x[1], x[0]), reverse=True)
     LOGGER.info('Document Frequencies:')
     LOGGER.info(sorted_uniq_counts)
 
     ## Inverse Document Frequency (IDF)
     ### Traditional: log( N / DF )
-    ### Smoothed: log( N+1 / DF+1 )
+    ### Smoothed (sklearn style): log( N+1 / DF+1 ) + 1
     num_documents = len(posting_data)
-    idf_vals = {key: np.log((num_documents+1) / (uniq_counts[key]+1)) for key in vectorizer.vocabulary_}
+    idf_vals = {key: (np.log((num_documents+1) / (uniq_counts[key]+1)) + 1) for key in vectorizer.vocabulary_}
     sorted_idf_vals = sorted(idf_vals.items(), key=lambda x: (x[1], x[0]), reverse=True)
     LOGGER.info('Inverse Document Frequencies:')
     LOGGER.info(sorted_idf_vals)
