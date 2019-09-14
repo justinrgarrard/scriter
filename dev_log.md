@@ -54,6 +54,7 @@
 | TBD | Date Range Sort |
 | TBD | Text Similarity Filter for Improved Duplicate Detection |
 | TBD | More Thorough Test Suite |
+| TBD | Automatically update HTML with table names from DB |
 
 
 ### History

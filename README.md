@@ -6,18 +6,20 @@ the outputs.
 
 ### Architecture
 
-For prototyping purposes, the following three components run on the
+For prototyping purposes, the following four components run on the
 same server.
 
-* Weekly Web Scraper Job to Gather Data (Python + cron)
+* Web Scraper Job to Gather Data (Python + cron)
 
 * DB to Store Data (Postgres)
 
-* Web Server to Display Data (Apache + Django)
+* Data Processor to convert raw posting information into NLP statistics
+
+* Web Server to Display Data (Django)
 
 ![Visual of Architecture](scriter_overview.png)
 
-### Setup
+### First Time Setup
 
 1. Become root
 
