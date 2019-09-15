@@ -1,9 +1,7 @@
 import numpy as np
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-# from .models import Job
+from django.http import JsonResponse
 from .models import create_model
-from django.db.models.query import QuerySet
 
 
 def home_page(request):
@@ -43,7 +41,7 @@ def chart_data(request):
         # Sort by Key, alphabetically
         matched = sorted(matched, key=lambda x: x[0])
 
-    ## Null keys below the first quartile for easier viewing
+    ## Ignore keys below the first quartile for easier viewing
     cutoff = np.percentile(vals, 25)
     matched = [(item[0], item[1]) for item in matched if item[1] > cutoff]
 

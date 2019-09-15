@@ -62,6 +62,10 @@ def main(job_title):
     LOGGER.info('Input Data Shape:')
     LOGGER.info(posting_data.shape)
 
+    ## Handle some common problem cases for tokenizing
+    posting_data.str.replace('#', 'SHARP')
+    posting_data.str.replace('+', 'PLUS')
+
     # Generate statistics on data
     vocab = [key.lower() for key in techs]
     LOGGER.info('Number of Keywords:')
