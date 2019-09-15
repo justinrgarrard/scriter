@@ -63,8 +63,8 @@ def main(job_title):
     LOGGER.info(posting_data.shape)
 
     ## Handle some common problem cases for tokenizing
-    posting_data.str.replace('#', 'SHARP')
-    posting_data.str.replace('+', 'PLUS')
+    posting_data = posting_data.str.replace('#', 'SHARP')
+    posting_data = posting_data.str.replace('+', 'PLUS')
 
     # Generate statistics on data
     vocab = [key.lower() for key in techs]
@@ -73,7 +73,7 @@ def main(job_title):
     tweet_tk = TweetTokenizer()
 
     ## Total Counts (Term Frequency; TF)
-    vectorizer = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
+    vectorizer = CountVectorizer(ngram_range=(1, 3), strip_accents='unicode',
                                  vocabulary=vocab, tokenizer=tweet_tk.tokenize)
     count_vector = vectorizer.fit_transform(posting_data)
     ### TODO: Find a way to use the sparse matrix implementation to improve performance
@@ -85,7 +85,7 @@ def main(job_title):
     LOGGER.info(sorted_counts)
 
     ## Unique Counts per Link (Document Frequency; DF)
-    vectorizer_binary = CountVectorizer(ngram_range=(1, 2), strip_accents='unicode',
+    vectorizer_binary = CountVectorizer(ngram_range=(1, 3), strip_accents='unicode',
                                         vocabulary=vocab, tokenizer=tweet_tk.tokenize, binary=True)
     count_vector_binary = vectorizer_binary.fit_transform(posting_data)
     ### TODO: Find a way to use the sparse matrix implementation to improve performance
@@ -112,6 +112,7 @@ def main(job_title):
     LOGGER.info(sorted_tfidf_vals)
 
     # Format output
+    ## Create output object
     output = pd.DataFrame()
     output['Keyword'] = vocab
     output['TF'] = output['Keyword'].apply(lambda x: counts[x])
@@ -119,6 +120,13 @@ def main(job_title):
     output['IDF'] = output['Keyword'].apply(lambda x: idf_vals[x])
     output['TFIDF'] = output['Keyword'].apply(lambda x: tfidf_vals[x])
     output['DOCUMENT_COUNT'] = num_documents
+
+    ## Change keyword names
+    def key_cleaner(keyname):
+        out = keyname.replace('Sharp', '#')
+        out = out.replace('Plus', '+')
+        return out
+    output['Keyword'] = [key_cleaner(key) for key in vocab]
 
     LOGGER.info('Output Data Shape:')
     LOGGER.info(output.shape)
