@@ -47,6 +47,13 @@ same server.
 # ansible-playbook main.yml --become
 ```
 
+5. First time data load
+```
+# sudo su scriter
+[scriter]$ cd test/
+[scriter]$ python first_run.py
+```
+
 ### Usage
 
 1. Collect data using the web scraper

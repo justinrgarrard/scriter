@@ -35,7 +35,7 @@
 | DONE | Visualize TF-IDF models |
 | DONE | Develop UI model |
 | DONE | Parametrize for different job titles |
-| TBD | Deploy site to scriter.net domain |
+| WIP | Deploy site to scriter.net domain |
 
 
 **Functional**
