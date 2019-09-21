@@ -14,7 +14,7 @@
     # Update
     - name: update system
       apt:
-        name: *
+        name: "*"
 
     # Install Pip, Pyscopg2, and Postgres
     - name: pip install
@@ -117,13 +117,13 @@
         name: apache2
         state: latest
     - name: apache add-on (apache2-utils)
-        apt:
-          name: apache2-utils
-          state: latest
+      apt:
+        name: apache2-utils
+        state: latest
     - name: apache add-on (ssl-cert)
-        apt:
-          name: ssl-cert
-          state: latest
+      apt:
+        name: ssl-cert
+        state: latest
     - name: apache wsgi interface
       apt:
         name: libapache2-mod-wsgi-py3
