@@ -132,6 +132,10 @@
       apt:
         name: libapache2-mod-wsgi-py3
         state: latest
+    - name: source environment variables in Apache
+      lineinfile:
+        path: /etc/apache2/envvars
+        line: ". /etc/profile.d/scriter.sh"
     - name: apache activate
       service:
         name: apache2

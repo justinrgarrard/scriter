@@ -44,7 +44,7 @@ same server.
 
 ```
 # cd setup/
-# ansible-playbook main.yml --become
+# ansible-playbook install.yml
 ```
 
 5. First time data load
