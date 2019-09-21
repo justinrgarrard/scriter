@@ -49,7 +49,9 @@ def web_scrape():
     for job in JOB_TITLES:
         cmd = "scrapy runspider web_scrape.py -o {0}.csv -s CLOSESPIDER_PAGECOUNT=1000" \
               " -a job_title='{1}'  >> ../test/run_log.txt 2>&1".format(job.replace(' ', '_'), job.replace(' ', '+'))
+        LOGGER.info(cmd)
         output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
+        LOGGER.info(output)
 
 
 def data_load():
@@ -60,8 +62,10 @@ def data_load():
     """
     target_dir = '../web_scraper'
     for job in JOB_TITLES:
-        cmd = "python data_load.py {0}.csv {0} >> ../test/run_log.txt 2>&1".format(job.replace(' ', '_'))
+        cmd = "python data_load.py {0}.csv {1} >> ../test/run_log.txt 2>&1".format(job.replace(' ', '_'), job.lower().replace(' ', '_'))
+        LOGGER.info(cmd)
         output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
+        LOGGER.info(output)
 
 
 def model_build():
@@ -72,8 +76,10 @@ def model_build():
     """
     target_dir = '../data_modeler'
     for job in JOB_TITLES:
-        cmd = "python model_build.py {0} >> ../test/run_log.txt 2>&1".format(job.replace(' ', '_'))
+        cmd = "python model_build.py {0} >> ../test/run_log.txt 2>&1".format(job.lower().replace(' ', '_'))
+        LOGGER.info(cmd)
         output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
+        LOGGER.info(output)
 
 
 # def start_web_server():

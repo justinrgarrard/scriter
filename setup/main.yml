@@ -11,6 +11,11 @@
     db_password: scriter_pass
     web_db: scriter_web
   tasks:
+    # Update
+    - name: update system
+      apt:
+        name: *
+
     # Install Pip, Pyscopg2, and Postgres
     - name: pip install
       apt:
@@ -110,6 +115,18 @@
     - name: apache install
       apt:
         name: apache2
+        state: latest
+    - name: apache add-on (apache2-utils)
+        apt:
+          name: apache2-utils
+          state: latest
+    - name: apache add-on (ssl-cert)
+        apt:
+          name: ssl-cert
+          state: latest
+    - name: apache wsgi interface
+      apt:
+        name: libapache2-mod-wsgi-py3
         state: latest
     - name: apache activate
       service:
