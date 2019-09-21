@@ -5,5 +5,4 @@ pandas
 sqlalchemy
 sklearn
 django
-mod_wsgi
 psycopg2-binary

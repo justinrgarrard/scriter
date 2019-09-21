@@ -124,6 +124,10 @@
       apt:
         name: ssl-cert
         state: latest
+    - name: apache wsgi interface
+      apt:
+        name: libapache2-mod-wsgi-py3
+        state: latest
     - name: apache activate
       service:
         name: apache2
