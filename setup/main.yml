@@ -116,6 +116,10 @@
       apt:
         name: apache2
         state: latest
+    - name: apache add-on (apache-dev)
+      apt:
+        name: apache2-dev
+        state: latest
     - name: apache add-on (apache2-utils)
       apt:
         name: apache2-utils
