@@ -40,21 +40,36 @@ same server.
 # git clone https://github.com/justinrgarrard/scriter.git
 ```
 
-4. Run the Ansible playbook to install and configure Scriter
+4. Run the Ansible playbook to install and configure the application
 
 ```
-# cd setup/
-# ansible-playbook install.yml
+[root]# cd setup/
+[root]# ansible-playbook install.yml
 ```
 
-5. First time data load
+5. Perform a first time data load
 ```
-# sudo su scriter
+[root]# sudo su scriter
 [scriter]$ cd test/
 [scriter]$ python first_run.py
 ```
 
-### Usage
+6.(Optional) Test deploy to localhost
+```
+[scriter]$ cd web_server/
+[scriter]$ python manage.py runserver
+< CTRL-C to Kill>
+```
+
+7. Deploy
+```
+[scriter]$ cd setup/
+[scriter]$ ansible deploy.yml
+[scriter]$ exit
+[root]# systemctl start apache2
+```
+
+### Other Usage
 
 1. Collect data using the web scraper
 
@@ -75,12 +90,5 @@ same server.
 ```
 [scriter]$ cd data_modeler/
 [scriter]$ python model_build.py software_engineer
-```
-
-4. Launch web server
-
-```
-[scriter]$ cd web_server/
-[scriter]$ python manage.py runserver
 ```
 

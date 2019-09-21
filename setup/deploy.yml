@@ -1,0 +1,39 @@
+---
+### Playbook for deploying Scriter
+#
+# Be sure to change the password in vars
+
+- hosts: localhost
+  remote_user: root
+  vars:
+    secret_key: tabasco
+    allowed_hosts: 54.172.45.11
+  tasks:
+    # Generate secret key
+
+    # Change settings file
+    - name: disable debug mode for Django
+      replace:
+        path: /opt/scriter/web_server/scriter/scriter/settings.py
+        regexp: "DEBUG = True"
+        replace: "DEBUG = False"
+    - name: replace secret key
+      replace:
+        path: /opt/scriter/web_server/scriter/scriter/settings.py
+        regexp: "SECRET_KEY = '=k3(5=0#o=x0)xs5)%fei(q+p219h9$4-&py$ddxc*u$*c87)f'"
+        replace: "SECRET_KEY = '{{ secret_key }}'"
+    - name: update allowed hosts
+      replace:
+        path: /opt/scriter/web_server/scriter/scriter/settings.py
+        regexp: "ALLOWED_HOSTS = []"
+        replace: "ALLOWED_HOSTS = [{{ allowed_hosts }}]"
+
+#    # Collect static files
+#    - name: collect static files for Django
+#      shell:
+
+    # Refresh Apache
+    - name: apache activate
+      service:
+        name: apache2
+        state: started

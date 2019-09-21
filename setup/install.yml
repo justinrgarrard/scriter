@@ -1,8 +1,7 @@
 ---
 ### Playbook for configuring a server to work with Scriter
 #
-# Be sure to change the password in vars when deploying to production
-#
+# Be sure to change the password in vars
 
 - hosts: localhost 
   remote_user: root
@@ -136,10 +135,6 @@
       lineinfile:
         path: /etc/apache2/envvars
         line: ". /etc/profile.d/scriter.sh"
-    - name: apache activate
-      service:
-        name: apache2
-        state: started
 
     # Configure a service account
     - name: add service account
