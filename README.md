@@ -32,14 +32,14 @@ steps to configure an Ubuntu 18.04 server.
 2. Install Ansible
 
 ```
-# apt-get install ansible
+[root]# apt-get install ansible
 ```
 
 3. Clone this repository at /opt/scriter
 
 ```
-# cd /opt
-# git clone https://github.com/justinrgarrard/scriter.git
+[root]# cd /opt
+[root]# git clone https://github.com/justinrgarrard/scriter.git
 ```
 
 4. Run the Ansible playbook to install and configure the application
@@ -56,7 +56,7 @@ steps to configure an Ubuntu 18.04 server.
 [scriter]$ python first_run.py
 ```
 
-6.(Optional) Test deploy to localhost
+6. (Optional) Test deploy to localhost
 ```
 [scriter]$ cd /opt/scriter/web_server/
 [scriter]$ python manage.py runserver
