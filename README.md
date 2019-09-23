@@ -6,14 +6,13 @@ the outputs.
 
 ### Architecture
 
-For prototyping purposes, the following four components run on the
-same server.
+The application is written in Python and consists of four separate components, loosely coupled.
 
-* Web Scraper Job to Gather Data (Python + cron)
+* Web Scraper Job to Gather Data (Scrapy)
 
 * DB to Store Data (Postgres)
 
-* Data Processor to convert raw posting information into TFIDF metrics
+* Model Builder to convert raw job posting text into TFIDF metrics (Sklearn)
 
 * Web Server to Display Data (Django)
 
@@ -21,13 +20,16 @@ same server.
 
 ### First Time Setup
 
+An installer has been provided to simplify the initial setup. Use the following
+steps to configure an Ubuntu 18.04 server.
+
 1. Become root
 
 ```
 [user]$ sudo su
 ```
 
-2. Install Ansible on an Ubuntu 18.04 Server
+2. Install Ansible
 
 ```
 # apt-get install ansible
@@ -43,27 +45,27 @@ same server.
 4. Run the Ansible playbook to install and configure the application
 
 ```
-[root]# cd setup/
+[root]# cd /opt/scriter/setup/
 [root]# ansible-playbook install.yml
 ```
 
 5. Perform a first time data load
 ```
 [root]# sudo su scriter
-[scriter]$ cd test/
+[scriter]$ cd /opt/scriter/test/
 [scriter]$ python first_run.py
 ```
 
 6.(Optional) Test deploy to localhost
 ```
-[scriter]$ cd web_server/
+[scriter]$ cd /opt/scriter/web_server/
 [scriter]$ python manage.py runserver
 < CTRL-C to Kill>
 ```
 
 7. Deploy
 ```
-[scriter]$ cd setup/
+[scriter]$ cd /opt/scriter/setup/
 [scriter]$ ansible deploy.yml
 ```
 
@@ -73,17 +75,17 @@ same server.
 
 ```
 [scriter]$ cd web_scraper/
-[scriter]$ scrapy runspider web_scrape.py -o links.csv -s CLOSESPIDER_PAGECOUNT=1000 -a job_title='software+engineer'
+[scriter]$ scrapy runspider web_scrape.py -o software_engineer.csv -s CLOSESPIDER_PAGECOUNT=1000 -a job_title='software+engineer'
 ```
 
 2. Load data into the Postgres DB
 
 ```
 [scriter]$ cd web_scraper/
-[scriter]$ python data_load.py links.csv software_engineer
+[scriter]$ python data_load.py software_engineer.csv software_engineer
 ```
 
-3. Perform data transformations
+3. Generate TFIDF metrics
 
 ```
 [scriter]$ cd data_modeler/
