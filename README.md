@@ -1,6 +1,6 @@
 # README
 
-[Scriter](www.scriter.net) is a web application that scrapes job posting data and visualizes
+[Scriter](http://www.scriter.net) is a web application that scrapes job posting data and visualizes
 the outputs.
 
 
