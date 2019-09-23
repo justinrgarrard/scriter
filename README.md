@@ -1,6 +1,6 @@
 # README
 
-Scriter is a web application that scrapes job posting data and visualizes
+[Scriter](www.scriter.net) is a web application that scrapes job posting data and visualizes
 the outputs.
 
 
@@ -13,7 +13,7 @@ same server.
 
 * DB to Store Data (Postgres)
 
-* Data Processor to convert raw posting information into NLP statistics
+* Data Processor to convert raw posting information into TFIDF metrics
 
 * Web Server to Display Data (Django)
 
@@ -65,11 +65,9 @@ same server.
 ```
 [scriter]$ cd setup/
 [scriter]$ ansible deploy.yml
-[scriter]$ exit
-[root]# systemctl start apache2
 ```
 
-### Other Usage
+### Manual Usage
 
 1. Collect data using the web scraper
 

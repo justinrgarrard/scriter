@@ -1,7 +1,6 @@
 ---
 ### Playbook for deploying Scriter
 #
-# Be sure to change the password in vars
 
 - hosts: localhost
   remote_user: root
@@ -9,7 +8,7 @@
     secret_key: tabasco
     allowed_hosts: 54.172.45.11
   tasks:
-    # Generate secret key
+    # TODO: Generate secret key
 
     # Change settings file
     - name: disable debug mode for Django
@@ -28,9 +27,7 @@
         regexp: "ALLOWED_HOSTS = []"
         replace: "ALLOWED_HOSTS = [{{ allowed_hosts }}]"
 
-#    # Collect static files
-#    - name: collect static files for Django
-#      shell:
+   # TODO: Collect static files
 
     # Refresh Apache
     - name: apache activate
