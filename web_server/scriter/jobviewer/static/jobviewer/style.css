@@ -10,6 +10,11 @@ p {
     color: #333333;
 }
 
+#row.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
 .container {
     padding-top: 20px;
     min-width: 1000px;
