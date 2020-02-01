@@ -25,7 +25,10 @@ JOB_TITLES = ["Software Developer",
                 "Data Engineer",
                 "DevOps Engineer",
                 "Data Analyst",
-                "Data Scientist"]
+                "Data Scientist",
+                "System Administrator",
+                "Linux Administrator",
+                "Network Administrator"]
 
 
 def parse_args():
@@ -80,10 +83,6 @@ def model_build():
         LOGGER.info(cmd)
         output = subprocess.check_output(cmd, cwd=target_dir, shell=True)
         LOGGER.info(output)
-
-
-# def start_web_server():
-#     pass
 
 
 if __name__ == '__main__':

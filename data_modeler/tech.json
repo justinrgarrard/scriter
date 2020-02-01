@@ -103,5 +103,19 @@
   "Blockchain":"Blockchain",
   "FSharp":"F#",
   "Erlang":"Erlang",
-  "Cisco": "Cisco"
+  "Cisco": "Cisco",
+  "APlus": "A+",
+  "NetworkPlus": "Network+",
+  "ServerPlus": "Server+",
+  "SecurityPlus": "Security+",
+  "LinuxPlus": "Linux+",
+  "MCSE": "MCSE",
+  "MCSA": "MCSA",
+  "RHCE": "RHCE",
+  "RHCSA": "RHSCA",
+  "CCNA": "CCNA",
+  "CWNA": "CWNA",
+  "JNCIA": "JNCIA",
+  "CISP": "CISP",
+  "VMWare": "VMWare"
 }
