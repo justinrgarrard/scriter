@@ -48,7 +48,7 @@
   "Drupal": "Drupal",
   "Node.js": "Node.js",
   "Node": "Node.js",
-  ". NET": ".NET",
+  ".NET": ".NET",
   "Pandas": "Pandas",
   "Unity 3D":"Unity 3D",
   "React Native":"React Native",
@@ -117,5 +117,11 @@
   "CWNA": "CWNA",
   "JNCIA": "JNCIA",
   "CISP": "CISP",
-  "VMWare": "VMWare"
+  "GSEC": "GSEC",
+  "SSCP": "SSCP",
+  "VMWare": "VMWare",
+  "Unix": "Unix",
+  "Database": "Database",
+  "Scripting": "Scripting",
+  "Secret Clearance": "Secret Clearance"
 }

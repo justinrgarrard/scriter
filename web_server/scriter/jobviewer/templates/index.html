@@ -9,7 +9,7 @@
 </head>
 <body onload="refreshChart()">
 <div id="container" data-url="{% url 'chart_data' %}"></div>
-<div class="row">
+<div id="row" class="row">
     <div class="col-sm-4">
         <select class="form-control" id="title-selector" onchange="refreshChart()">
             <option value="Software+Developer">
