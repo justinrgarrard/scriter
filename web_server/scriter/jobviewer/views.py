@@ -45,6 +45,9 @@ def chart_data(request):
     cutoff = np.percentile(vals, 25)
     matched = [(item[0], item[1]) for item in matched if item[1] > cutoff]
 
+    ## Remove any zero value items
+    matched = [(item[0], item[1]) for item in matched if item[1] > 0]
+
     # Map metric to color
     color_matcher = {'TFIDF': '#7cb5ec', 'TF': '#f79039', 'DF': '#90ed7d', 'IDF': '#8085e9'}
 
