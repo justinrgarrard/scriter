@@ -11,7 +11,7 @@ import hashlib
 import logging
 import argparse
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 from sqlalchemy import Column, String
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -97,7 +97,7 @@ def data_load(filtered_data, job_title):
     engine = create_engine(INGEST_DB_CONN_STR)
 
     # Create table for job title if it does not exist
-    if not engine.dialect.has_table(engine, job_title):
+    if not inspect(engine).has_table(job_title):
         Base = declarative_base()
 
         class newTable(Base):

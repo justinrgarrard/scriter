@@ -4,3 +4,4 @@ venv/
 setup/main.retry
 web_scraper/*.csv
 web_server/*.db
+test/*.txt
