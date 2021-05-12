@@ -18,13 +18,13 @@
     # Install Pip, Pyscopg2, and Postgres
     - name: pip install
       apt:
-        name: python-pip
+        name: python3-pip
     - name: psycopg2 prereq (libpq-dev)
       apt:
         name: libpq-dev
-    - name: psycopg2 install
+    - name: python3-psycopg2 install
       apt:
-        name: python-psycopg2
+        name: python3-psycopg2
     - name: postgresql install
       apt:
         name: postgresql
