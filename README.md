@@ -1,8 +1,61 @@
 # README
 
-[Scriter](http://www.scriter.net) is a web application that scrapes job posting data and visualizes
-the outputs.
+Scriter is a web application that scrapes job posting data and visualizes the outputs.
 
+![Visual of Webpage](resources/scriter_vis.png)
+
+### Setup and Usage
+
+An installer has been provided to simplify initial setup. Ensure that **Ansible** is installed on an Ubuntu 20.04 server, then use the following steps:
+
+```
+[user]$ sudo su
+[root]# ansible-playbook setup/install.yml
+[root]# sudo su scriter
+[scriter]$ python setup/first_run.py
+```
+
+***Test Local Deployment***
+
+```
+[scriter]$ python web_server/scriter/manage.py runserver
+< CTRL-C to Kill>
+```
+
+***Production Deployment***
+
+```
+[scriter]$ ansible setup/deploy.yml
+```
+
+### Subsystem Usage
+
+***Web Scrape***
+
+```
+[scriter]$ cd web_scraper/
+[scriter]$ scrapy runspider web_scrape.py -o software_engineer.csv -s CLOSESPIDER_PAGECOUNT=1000 -a job_title='software+engineer'
+```
+
+***Load Data into PostgreSQL***
+
+```
+[scriter]$ cd web_scraper/
+[scriter]$ python data_load.py software_engineer.csv software_engineer
+```
+
+***Generate Metrics from Data***
+
+```
+[scriter]$ cd data_modeler/
+[scriter]$ python model_build.py software_engineer
+```
+
+***Set Keywords***
+
+```
+[scriter]$ vim data_modeler/tech.json
+```
 
 ### Architecture
 
@@ -10,85 +63,11 @@ The application is written in Python and consists of four separate components, l
 
 * Web Scraper Job to Gather Data (Scrapy)
 
-* DB to Store Data (Postgres)
+* DB to Store Data (sqlalchemy + Postgres)
 
-* Model Builder to convert raw job posting text into TFIDF metrics (Sklearn)
+* Model Builder to convert raw job posting text into TFIDF metrics (sklearn + NLTK)
 
-* Web Server to Display Data (Django)
+* Web Server to Display Data (Django + Highcharts)
 
-![Visual of Architecture](scriter_overview.png)
-
-### First Time Setup
-
-An installer has been provided to simplify the initial setup. Use the following
-steps to configure an Ubuntu 18.04 server.
-
-1. Become root
-
-```
-[user]$ sudo su
-```
-
-2. Install Ansible
-
-```
-[root]# apt-get install ansible
-```
-
-3. Clone this repository at /opt/scriter
-
-```
-[root]# cd /opt
-[root]# git clone https://github.com/justinrgarrard/scriter.git
-```
-
-4. Run the Ansible playbook to install and configure the application
-
-```
-[root]# cd /opt/scriter/setup/
-[root]# ansible-playbook install.yml
-```
-
-5. Perform a first time data load
-```
-[root]# sudo su scriter
-[scriter]$ cd /opt/scriter/test/
-[scriter]$ python first_run.py
-```
-
-6. (Optional) Test deploy to localhost
-```
-[scriter]$ cd /opt/scriter/web_server/
-[scriter]$ python manage.py runserver
-< CTRL-C to Kill>
-```
-
-7. Deploy
-```
-[scriter]$ cd /opt/scriter/setup/
-[scriter]$ ansible deploy.yml
-```
-
-### Manual Usage
-
-1. Collect data using the web scraper
-
-```
-[scriter]$ cd web_scraper/
-[scriter]$ scrapy runspider web_scrape.py -o software_engineer.csv -s CLOSESPIDER_PAGECOUNT=1000 -a job_title='software+engineer'
-```
-
-2. Load data into the Postgres DB
-
-```
-[scriter]$ cd web_scraper/
-[scriter]$ python data_load.py software_engineer.csv software_engineer
-```
-
-3. Generate TFIDF metrics
-
-```
-[scriter]$ cd data_modeler/
-[scriter]$ python model_build.py software_engineer
-```
+![Visual of Architecture](resources/scriter_overview.png)
 
