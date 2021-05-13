@@ -17,12 +17,16 @@ An installer has been provided to simplify initial setup. Ensure that **Ansible*
 
 ***Test Local Deployment***
 
+Navigate to localhost:8000 with a web browser of your choice to interact with the application.
+
 ```
 [scriter]$ python web_server/scriter/manage.py runserver
 < CTRL-C to Kill>
 ```
 
 ***Production Deployment***
+
+Be sure to replace the secret key in `setup/deploy.yml` before running this command.
 
 ```
 [scriter]$ ansible setup/deploy.yml
